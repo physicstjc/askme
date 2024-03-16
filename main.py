@@ -19,7 +19,7 @@ response = client.chat.completions.create(
     },
     {
       "role": "user",
-      "content": +user_input+
+      "content": "${user_input}"
     },
     {
       "role": "assistant",
