@@ -23,6 +23,6 @@ response = client.chat.completions.create(
   ]
 )
 
-full_response += response.choices[0].delta.get("content", "")
+full_response = completion.choices[0].message.content
 st.session_state.msg_bot.append({"role": "assistant", "content": "{full_response}"})
 
