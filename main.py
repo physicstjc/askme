@@ -12,12 +12,15 @@ client = OpenAI(
 
 st.title("Physics Tutor")
 
+if 'msg_bot' not in st.session_state:
+    st.session_state.msg_bot = []
+
 myinput = st.chat_input("What is up?", key="my_unique_chat_input_key")
 
 if myinput:
     st.session_state.msg_bot.append({"role": "user", "content": myinput})
-
-    with st.chat_message("user", key="user_message"):
+    
+    with st.chat_message("user"):
         st.markdown(myinput)
 
 
