@@ -37,7 +37,7 @@ if myinput:
 # Debug print
 # Display user's input
 	
-	st.write(f"User: {myinput}")
+    st.write(f"User: {myinput}")
 	
 # Check if the response is valid and display the assistant's response
     if response and response.choices and response.choices[0] and response.choices[0].message:
