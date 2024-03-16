@@ -20,6 +20,7 @@ if myinput := st.chat_input("What is up?"):
 		st.markdown(myinput)
 
 	with st.chat_message("assistant"):
+		st.markdown(response.choices[0].message.content)
 		response = client.chat.completions.create(
   			model="gpt-3.5-turbo",
   			messages=[
@@ -28,7 +29,7 @@ if myinput := st.chat_input("What is up?"):
 			],
 			stream=True,
 		)
-		st.markdown(response.choices[0].message.content)
+		
 
 
 
