@@ -22,7 +22,7 @@ if "openai_model" not in st.session_state:
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = [
-	    {"role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge. If mathematical working is needed, display in Latex rendered images by wrapping them in between two sets of '$$' symbols."},
+	    {"role": "system", "content": "Speak like a friend who is very good in physics. Explain in a succinct and clearly manner, with no more than 15 words per key idea, assuming the students know very little prior knowledge. If mathematical working is needed, display in Latex rendered images by wrapping them in between two $ symbols."},
     ]
 
 # Display chat messages from history on app rerun
