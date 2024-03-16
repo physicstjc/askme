@@ -16,7 +16,7 @@ if user_input:
         model="gpt-4-turbo-preview",
         messages=[
             {"role": "system", "content": "You are a helpful AI tutoring assistant..."},
-            {"role": "user", "content": user_input}
+            {"role": "user", "content": "${user_input}"}
         ],
         temperature=1,
         max_tokens=256,
