@@ -21,7 +21,6 @@ try:
 			st.markdown(myinput)
 
 		with st.chat_message("assistant"):
-			message_placeholder = st.empty()
 			response = client.chat.completions.create(
   				model="gpt-3.5-turbo",
   				messages=[
@@ -30,6 +29,5 @@ try:
 				],
 				stream=True,
 			)
-		
 		st.markdown(response.choices[0].message.content)
 
