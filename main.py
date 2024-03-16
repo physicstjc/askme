@@ -10,7 +10,7 @@ client = OpenAI(
 # openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-st.title("ChatGPT-like clone with Prompt Engineering")
+st.title("Physics Tutor")
 
 
 prompt_template = """
@@ -39,11 +39,11 @@ try:
 			message_placeholder = st.empty()
 			full_response = ""
 			for response in client.completions.create(
-				model=st.session_state["openai_model"],
+				model="gpt-3.5-turbo",
 				messages=[
-							{"role": "system", "content": prompt_template},
-							{"role": "user", "content": prompt},
-						],
+					{"role": "system", "content": prompt_template},
+					{"role": "user", "content": prompt},
+				],
 				stream=True,
 			):
 				full_response += response.choices[0].delta.get("content", "")
