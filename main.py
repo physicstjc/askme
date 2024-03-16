@@ -23,6 +23,5 @@ response = client.chat.completions.create(
   ]
 )
 
-print(response.choices[0].message.content)
-#st.session_state.msg_bot.append({"role": "assistant", "content": "{}"})
+st.write(response.choices[0].message.content)
 
