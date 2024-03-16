@@ -28,6 +28,5 @@ try:
 					{"role": "user", "content": myinput},
 				],
 				stream=True,
-			)
-		st.markdown(response.choices[0].message.content)
+				st.markdown(response.choices[0].message.content))
 
