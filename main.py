@@ -19,7 +19,7 @@ response = client.chat.completions.create(
   model="gpt-3.5-turbo",
   messages=[
     {"role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."},
-    {"role": "user", "content": "{user_input}"}
+    {"role": "user", "content": user_input}
   ]
 )
 
