@@ -34,10 +34,7 @@ if myinput:
             ],
         )
 
-# Debug print
-# Display user's input
-	
-    st.markdown(f"User: {myinput}")
+    st.write("User: {myinput}")
 	
 # Check if the response is valid and display the assistant's response
     if response and response.choices and response.choices[0] and response.choices[0].message:
