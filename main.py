@@ -17,13 +17,6 @@ response = client.completions.create(
   prompt="Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."
 )
 
-
-if "openai_model" not in st.session_state:
-	st.session_state["openai_model"] = "gpt-3.5-turbo"
-
-if "msg_bot" not in st.session_state:
-	st.session_state.msg_bot = []
-
 for message in st.session_state.msg_bot:
 	with st.chat_message(message["role"]):
 		st.markdown(message["content"])
@@ -31,7 +24,7 @@ for message in st.session_state.msg_bot:
 try:
 
 	if prompt := st.chat_input("What is up?"):
-		st.session_state.msg_bot.append({"role": "user", "content": prompt})
+		st.session_state.msg_bot.append({"role": "user", "content": {prompt}})
 		with st.chat_message("user"):
 			st.markdown(prompt)
 
