@@ -11,18 +11,16 @@ client = OpenAI(
 
 
 st.title("Physics Tutor")
-
 if 'msg_bot' not in st.session_state:
     st.session_state.msg_bot = []
 
-myinput = st.chat_input("What is up?", key="my_unique_chat_input_key")
+myinput = st.text_input("What is up?")  # Use text_input instead of chat_input for compatibility
 
 if myinput:
     st.session_state.msg_bot.append({"role": "user", "content": myinput})
-    
-    with st.chat_message("user"):
-        st.markdown(myinput)
 
+    with st.container():  # Use container for grouping elements
+        st.write("User:", myinput)
 
     # Create the response from the model
     response = client.chat.completions.create(
@@ -31,10 +29,9 @@ if myinput:
             {"role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."},
             {"role": "user", "content": myinput},
         ],
-        stream=True,  # or False, depending on your requirement
     )
 
-    # Ensure response is valid and then display it
-    if response and response.choices and response.choices[0] and response.choices[0].message:
-        with st.chat_message("assistant"):
-            st.markdown(response.choices[0].message.content)
+    # Check response validity and display
+    if response and 'choices' in response and response.choices and len(response.choices) > 0 and 'message' in response.choices[0]:
+        with st.container():  # Use container for grouping elements
+            st.write("Assistant:", response.choices[0].message.content)
