@@ -11,27 +11,35 @@ client = OpenAI(
 
 
 st.title("Physics Tutor")
+
+#Change here onwards
 if 'msg_bot' not in st.session_state:
     st.session_state.msg_bot = []
 
-myinput = st.text_input("What is up?")  # Use text_input instead of chat_input for compatibility
+myinput = st.text_input("What is up?")  # Replace with chat_input if available
 
 if myinput:
     st.session_state.msg_bot.append({"role": "user", "content": myinput})
 
-    with st.container():  # Use container for grouping elements
+    with st.container():  # Display user input
         st.write("User:", myinput)
 
-    # Create the response from the model
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."},
-            {"role": "user", "content": myinput},
-        ],
-    )
+    try:
+        # Create the response from the model
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."},
+                {"role": "user", "content": myinput},
+            ],
+        )
 
-    # Check response validity and display
-    if response and 'choices' in response and response.choices and len(response.choices) > 0 and 'message' in response.choices[0]:
-        with st.container():  # Use container for grouping elements
-            st.write("Assistant:", response.choices[0].message.content)
+        # Debug print
+        st.write("Response:", response)
+
+        # Check response validity and display
+        if response and 'choices' in response and response.choices and len(response.choices) > 0 and 'message' in response.choices[0]:
+            with st.container():  # Display assistant's response
+                st.write("Assistant:", response.choices[0].message.content)
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
