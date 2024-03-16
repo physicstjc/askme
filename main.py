@@ -35,11 +35,12 @@ if myinput:
         )
 
         # Debug print
-        st.write("Response:", response)
-
-        # Check response validity and display
-        if response and 'choices' in response and response.choices and len(response.choices) > 0 and 'message' in response.choices[0]:
-            with st.container():  # Display assistant's response
-                st.write("Assistant:", response.choices[0].message.content)
-    except Exception as e:
+# Display user's input
+	st.write(f"User: {myinput}")
+	
+	# Check if the response is valid and display the assistant's response
+	if response and response.choices and response.choices[0] and response.choices[0].message:
+	    assistant_response = response.choices[0].message.content
+	    st.write(f"Assistant: {assistant_response}")
+	    except Exception as e:
         st.error(f"An error occurred: {e}")
