@@ -12,37 +12,21 @@ client = OpenAI(
 
 st.title("Physics Tutor")
 
-response = client.completions.create(
-  model="gpt-3.5-turbo-instruct",
-  prompt="Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."
+
+user_input = st.chat_input("What is up?")
+
+response = client.chat.completions.create(
+  model="gpt-3.5-turbo",
+  messages=[
+    {"role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."},
+    {"role": "user", "content": "{user_input}"}}
+  ]
 )
 
-for message in st.session_state.msg_bot:
-	with st.chat_message(message["role"]):
-		st.markdown(message["content"])
-
-try:
-
-	if prompt := st.chat_input("What is up?"):
-		st.session_state.msg_bot.append({"role": "user", "content": "{prompt}"})
-		with st.chat_message("user"):
-			st.markdown("{prompt}")
-
-		with st.chat_message("assistant"):
-			message_placeholder = st.empty()
-			full_response = ""
-			for response in client.completions.create(
-				model="gpt-3.5-turbo",
-				messages=[
-					{"role": "system", "content": "{prompt-template}"},
-					{"role": "user", "content": "{prompt}"},
-				],
-				stream=True,
-			):
-				full_response += response.choices[0].delta.get("content", "")
-				message_placeholder.markdown(full_response + "▌")
-			message_placeholder.markdown(full_response)
-		st.session_state.msg_bot.append({"role": "assistant", "content": "{full_response}"})
+full_response += response.choices[0].delta.get("content", "")
+	message_placeholder.markdown(full_response + "▌")
+	message_placeholder.markdown(full_response)
+st.session_state.msg_bot.append({"role": "assistant", "content": "{full_response}"})
 
 except Exception as e:
 	st.error(e)
