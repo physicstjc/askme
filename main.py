@@ -51,10 +51,3 @@ if prompt := st.chat_input("What is up?"):
     
     st.session_state.messages.append({"role": "assistant", "content": response})
 	
-# Check if the response is valid and display the assistant's response
-#    if response.choices[0]:
-#    	assistant_response = response.choices[0].message.content
-#    	st.markdown({assistant_response})
-
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
