@@ -26,7 +26,7 @@ try:
 	if prompt := st.chat_input("What is up?"):
 		st.session_state.msg_bot.append({"role": "user", "content": "{prompt}"})
 		with st.chat_message("user"):
-			st.markdown(prompt)
+			st.markdown("{prompt}")
 
 		with st.chat_message("assistant"):
 			message_placeholder = st.empty()
@@ -42,7 +42,7 @@ try:
 				full_response += response.choices[0].delta.get("content", "")
 				message_placeholder.markdown(full_response + "▌")
 			message_placeholder.markdown(full_response)
-		st.session_state.msg_bot.append({"role": "assistant", "content": full_response})
+		st.session_state.msg_bot.append({"role": "assistant", "content": "{full_response}"})
 
 except Exception as e:
 	st.error(e)
