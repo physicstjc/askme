@@ -17,7 +17,7 @@ st.title("Physics Tutor")
 
 # Set a default model
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-4-turbo-preview"
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -26,9 +26,9 @@ if "messages" not in st.session_state:
     ]
 
 # Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+#for message in st.session_state.messages:
+#    with st.chat_message(message["role"]):
+#        st.markdown(message["content"])
 
 # Accept user input
 if prompt := st.chat_input("What is up?"):
@@ -40,7 +40,7 @@ if prompt := st.chat_input("What is up?"):
 	    
     with st.chat_message("assistant"):
         stream = client.chat.completions.create(
-            model="gpt-4-turbo-preview",
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": m["role"], "content": m["content"]}
                 for m in st.session_state.messages
