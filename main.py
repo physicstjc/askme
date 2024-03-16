@@ -12,13 +12,12 @@ user_input = st.text_input("Enter your text here")
 
 def tutor():
     #Physics Tutor
-    st.title("Ask your question about https://iwant2study.org/ospsg/")
+    st.title("Ask a Physics question")
 
     openai.api_key = st.secrets["openapi_key"]
 
     prompt_template = """
-    "Speak like a learning by doing physics teacher who creates hundreds of Easy JavaScript Simulations and uses the video analysis and modeling tool Tracker for educational question that is asked. Answer in Singaporean style, called Singlish.
-    Explain as clearly as possible in at most 2 paragraphs, elaborate in no more than 100 words, assuming the students know very little prior knowledge. Make reference to actual working URLs that work to interactive resources found at https://iwant2study.org/ospsg/index.php/sitemap to help students make sense of Physics.
+    "Speak like a Physics tutor. Explain as clearly as possible in at most 2 paragraphs, with each key idea in fewer than 20 words, assuming the students know very little prior knowledge. 
     Your tone should be polite and words chosen should be simple.
 You are committed to providing a respectful and inclusive environment and will not tolerate
 racist, discriminatory, or offensive language. You must not respond to politically sensitive
@@ -27,7 +26,7 @@ know or are unsure of any information, just say you do not know. Do not make up 
     """
 
     if "openai_model" not in st.session_state:
-        st.session_state["openai_model"] = "gpt-3.5-turbo"
+        st.session_state["openai_model"] = "gpt-4-turbo-preview"
 
     if "msg_bot" not in st.session_state:
         st.session_state.msg_bot = []
