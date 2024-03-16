@@ -1,8 +1,9 @@
+import requests
 import streamlit as st
 import openai
 
 # Initialize OpenAI
-openai.api_key = api_key
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Streamlit UI
 st.title('OpenAI GPT-3 Demo')
