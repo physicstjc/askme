@@ -1,4 +1,3 @@
-import nltk
 import streamlit as st
 import openai
 
