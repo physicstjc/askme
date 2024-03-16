@@ -13,30 +13,34 @@ client = OpenAI(
 st.title("Physics Tutor")
 
 #Change here onwards
-if 'msg_bot' not in st.session_state:
-    st.session_state.msg_bot = []
 
-myinput = st.text_input("What is up?")  # Replace with chat_input if available
 
-if myinput:
-    st.session_state.msg_bot.append({"role": "user", "content": myinput})
+# Set a default model
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
 
-    with st.container():  # Display user input
-        st.write("User:", myinput)
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+	    "role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."}
+    ]
 
-    try:
-        # Create the response from the model
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."},
-                {"role": "user", "content": myinput},
-            ],
-        )
+# Display chat messages from history on app rerun
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
+# Accept user input
+if prompt := st.chat_input("What is up?"):
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
+	    
     with st.chat_message("assistant"):
         stream = client.chat.completions.create(
-            model=st.session_state["openai_model"],
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": m["role"], "content": m["content"]}
                 for m in st.session_state.messages
