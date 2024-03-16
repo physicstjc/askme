@@ -12,11 +12,11 @@ client = OpenAI(
 
 st.title("Physics Tutor")
 
+response = client.completions.create(
+  model="gpt-3.5-turbo-instruct",
+  prompt-template="Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."
+)
 
-prompt_template = """
-	"Speak like Einstein, a Physics teacher for every question that was asked, 
-	explain as clearly as possible, assuming the students know very little prior knowledge"
-	"""
 
 if "openai_model" not in st.session_state:
 	st.session_state["openai_model"] = "gpt-3.5-turbo"
@@ -41,8 +41,8 @@ try:
 			for response in client.completions.create(
 				model="gpt-3.5-turbo",
 				messages=[
-					{"role": "system", "content": prompt_template},
-					{"role": "user", "content": prompt},
+					{"role": "system", "content": "{prompt-template}"},
+					{"role": "user", "content": "{prompt}"},
 				],
 				stream=True,
 			):
