@@ -7,13 +7,11 @@ client = OpenAI(
 )
 
 # Initialize OpenAI
-
-openai.api_key = os.getenv('OPENAI_API_KEY')
+# openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
 st.title("ChatGPT-like clone with Prompt Engineering")
 
-# openai.api_key = st.secrets["openapi_key"]
 
 prompt_template = """
 	"Speak like Einstein, a Physics teacher for every question that was asked, 
