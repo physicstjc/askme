@@ -7,9 +7,6 @@ client = OpenAI()
 # Initialize OpenAI
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-st.title('OpenAI Physics Tutoring Assistant Demo')
-user_input = st.text_input("Enter your text here")
-
 def tutor():
     #Physics Tutor
     st.title("Ask a Physics question")
@@ -64,3 +61,6 @@ know or are unsure of any information, just say you do not know. Do not make up 
    
 def main():
     tutor()
+
+if __name__ == "__main__":
+    main()
