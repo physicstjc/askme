@@ -1,6 +1,2 @@
-pandas
-plotly
+openai
 streamlit
-yfinance
-pandas-datareader
-prophet
