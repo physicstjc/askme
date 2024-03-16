@@ -12,13 +12,14 @@ client = OpenAI(
 
 st.title("Physics Tutor")
 
-myinput = st.chat_input("What is up?")
+myinput = st.chat_input("What is up?", key="my_unique_chat_input_key")
 
 if myinput:
     st.session_state.msg_bot.append({"role": "user", "content": myinput})
-    
-    with st.chat_message("user"):
+
+    with st.chat_message("user", key="user_message"):
         st.markdown(myinput)
+
 
     # Create the response from the model
     response = client.chat.completions.create(
