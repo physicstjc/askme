@@ -1,9 +1,6 @@
 import streamlit as st
 import openai
 
-# Load API key
-api_key = st.secrets["OPENAI_API_KEY"]  # Assuming you've named your key "OPENAI_API_KEY" in secrets.toml
-
 # Initialize OpenAI
 openai.api_key = api_key
 
