@@ -7,13 +7,13 @@ client = OpenAI()
 # Initialize OpenAI
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
-st.title('OpenAI GPT-4 Physics Tutoring Assistant Demo')
+st.title('OpenAI Physics Tutoring Assistant Demo')
 user_input = st.text_input("Enter your text here")
 
 if user_input:
-    # Get response from OpenAI GPT-4
+    # Get response from OpenAI GPT-3.5
     response = openai.ChatCompletion.create(
-        model="gpt-4-turbo-preview",
+        model="gpt-3.5-turbo-instruct",
         messages=[
             {"role": "system", "content": "You are a helpful AI tutoring assistant..."},
             {"role": "user", "content": "${user_input}"}
