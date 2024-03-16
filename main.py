@@ -4,6 +4,12 @@ import openai
 from openai import OpenAI
 client = OpenAI()
 
+# Initialize OpenAI
+openai.api_key = os.getenv('OPENAI_API_KEY')
+
+st.title('OpenAI GPT-4 Physics Tutoring Assistant Demo')
+user_input = st.text_input("Enter your text here")
+
 response = client.chat.completions.create(
   model="gpt-4-turbo-preview",
   messages=[
@@ -13,7 +19,7 @@ response = client.chat.completions.create(
     },
     {
       "role": "user",
-      "content": ""
+      "content": user_input
     },
     {
       "role": "assistant",
