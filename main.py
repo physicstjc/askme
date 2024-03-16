@@ -24,8 +24,6 @@ response = client.chat.completions.create(
 )
 
 full_response += response.choices[0].delta.get("content", "")
-	message_placeholder.markdown(full_response + "▌")
-	message_placeholder.markdown(full_response)
 st.session_state.msg_bot.append({"role": "assistant", "content": "{full_response}"})
 
 except Exception as e:
