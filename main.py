@@ -33,11 +33,24 @@ if myinput:
                 {"role": "user", "content": myinput},
             ],
         )
+
+    with st.chat_message("assistant"):
+        stream = client.chat.completions.create(
+            model=st.session_state["openai_model"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        )
+        response = st.write_stream(stream)
+    
+    st.session_state.messages.append({"role": "assistant", "content": response})
 	
 # Check if the response is valid and display the assistant's response
-    if response.choices[0]:
-    	assistant_response = response.choices[0].message.content
-    	st.markdown({assistant_response})
+#    if response.choices[0]:
+#    	assistant_response = response.choices[0].message.content
+#    	st.markdown({assistant_response})
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
