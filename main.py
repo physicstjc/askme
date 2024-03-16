@@ -5,7 +5,7 @@ from openai import OpenAI
 client = OpenAI()
 
 # Initialize OpenAI
-openai.api_key = os.getenv('OPENAI_API_KEY')
+# openai.api_key = os.getenv('OPENAI_API_KEY')
 
 def tutor():
     #Physics Tutor
@@ -57,7 +57,6 @@ know or are unsure of any information, just say you do not know. Do not make up 
 
     except Exception as e:
         st.error(e)
-
    
 def main():
     tutor()
