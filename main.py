@@ -11,14 +11,15 @@ client = OpenAI(
 
 
 st.title("Physics Tutor")
-text_input = st.chat_input("What is up?")
+myinput = st.chat_input("What is up?")
 
 response = client.chat.completions.create(
   model="gpt-3.5-turbo",
   messages=[
     {"role": "system", "content": "Speak like a middle school Physics teacher for every question that was asked. Explain as clearly as possible, assuming the students know very little prior knowledge."},
-    {"role": "user", "content": text_input}
-  ]
+    {"role": "user", "content": myinput}
+  ],
+  stream=True,
 )
 
 st.markdown(response.choices[0].message.content)
