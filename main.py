@@ -1,8 +1,10 @@
 import os
 import streamlit as st
-import openai
+from openai import OpenAI
 # from openai import OpenAI
-# client = OpenAI()
+client = OpenAI(
+	api_key=os.environ['OPENAI_API_KEY'], 
+)
 
 # Initialize OpenAI
 
@@ -38,7 +40,7 @@ try:
 		with st.chat_message("assistant"):
 			message_placeholder = st.empty()
 			full_response = ""
-			for response in openai.ChatCompletion.create(
+			for response in client.completions.create(
 				model=st.session_state["openai_model"],
 				messages=[
 							{"role": "system", "content": prompt_template},
