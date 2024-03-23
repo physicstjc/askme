@@ -11,7 +11,7 @@ client = OpenAI(
 
 
 st.title("Physics Tutor")
-
+st.text("Ask me a Physics question!")
 #Change here onwards
 
 
