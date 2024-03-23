@@ -14,24 +14,10 @@ st.title("Physics Tutor")
 st.text("Ask me a Physics question!")
 #Change here onwards
 
-# Image uploader
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
-if uploaded_file is not None:
-    # Read the image file
-    image_data = uploaded_file.getvalue()
-
-    # Process the image with the GPT-4-Vision-Preview model
-    response = client.image_model.process(
-        model="gpt-4-vision-preview",
-        image_data=image_data
-    )
-
-    # Display results
-    st.write(response)
 	
 # Set a default model
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-4-vision-preview"
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -53,7 +39,7 @@ if prompt := st.chat_input("What is up?"):
 	    
     with st.chat_message("assistant"):
         stream = client.chat.completions.create(
-            model="gpt-4-vision-preview",
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": m["role"], "content": m["content"]}
                 for m in st.session_state.messages
