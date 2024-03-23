@@ -14,7 +14,22 @@ st.title("Physics Tutor")
 st.text("Ask me a Physics question!")
 #Change here onwards
 
+u
+# Image uploader
+uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+if uploaded_file is not None:
+    # Read the image file
+    image_data = uploaded_file.getvalue()
 
+    # Process the image with the GPT-4-Vision-Preview model
+    response = client.image_model.process(
+        model="gpt-4-vision-preview",
+        image_data=image_data
+    )
+
+    # Display results
+    st.write(response)
+	
 # Set a default model
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4-turbo-preview"
