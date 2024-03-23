@@ -14,7 +14,6 @@ st.title("Physics Tutor")
 st.text("Ask me a Physics question!")
 #Change here onwards
 
-u
 # Image uploader
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 if uploaded_file is not None:
