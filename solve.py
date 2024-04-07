@@ -8,6 +8,8 @@ client = OpenAI(
 import requests
 from PIL import Image
 import io
+import tempfile
+import shutil
 
 st.title("Physics Tutor")
 st.text("Ask me a Physics question!")
@@ -23,16 +25,8 @@ def upload_image():
         return Image.open(io.BytesIO(bytes_data))
     return None
 
-def analyze_image(image, image_name):
+def analyze_image(image_url):
     """ Function to analyze the image using an AI model """
-    
-    # Constructing the URL for the uploaded image
-    base_url = "https://solvephy.streamlit.app/~/+/media/"
-    image_url = f"{base_url}{image_name}"
-
-    # Debug: Print the image URL
-    st.write("Debug - Image URL: ", image_url)
-
     try:
         response = client.chat.completions.create(
             model="gpt-4-vision-preview",
@@ -59,15 +53,10 @@ def analyze_image(image, image_name):
         st.error(f"An error occurred: {str(e)}")
         return None
 
-# The rest of your code remains the same
-
-
-
 def display_results(results):
     """ Function to display the analysis results """
     st.write("Analysis Results:")
     st.write(results)
-
 
 def main():
     st.title("Physics Question Analyzer using AI")
@@ -79,11 +68,14 @@ def main():
         image = Image.open(io.BytesIO(uploaded_file.getvalue()))
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
+        # Construct the URL for the uploaded image
+        base_url = "https://solvephy.streamlit.app/~/+/media/"
+        image_url = f"{base_url}{uploaded_file.name}"
+
         # Analyze the image when the button is clicked
         if st.button('Analyze'):
             try:
-                # Pass both the image and its name to the analyze function
-                results = analyze_image(image, uploaded_file.name)
+                results = analyze_image(image_url)
                 display_results(results)
             except Exception as e:
                 st.error(f"An error occurred: {e}")
