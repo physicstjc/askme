@@ -16,18 +16,24 @@ from PIL import UnidentifiedImageError
 
 s3_client = boto3.client('s3', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'], aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
 
-def upload_to_s3(uploaded_file):
-    if uploaded_file is not None:
-        file_name = uploaded_file.name
-        uploaded_file.seek(0)  # Reset file pointer
+def upload_to_s3(uploaded_file, bucket_name, object_name=None):
+    """Upload a file to an S3 bucket
 
-        try:
-            s3_client.upload_fileobj(uploaded_file, "askphysics", file_name)
-            file_url = f"https://askphysics.s3.amazonaws.com/{file_name}"
-            return file_url
-        except Exception as e:
-            st.error(f"Failed to upload to S3: {e}")
-            return None
+    :param uploaded_file: File to upload
+    :param bucket_name: Bucket to upload to
+    :param object_name: S3 object name. If not specified then file_name is used
+    :return: True if file was uploaded, else False
+    """
+    if object_name is None:
+        object_name = uploaded_file.name
+
+    try:
+        # Upload the file
+        s3_client.upload_fileobj(uploaded_file, "askphysics", object_name)
+        return f"https://askphysics.s3.ap-southeast-1.amazonaws.com/{object_name}"
+    except Exception as e:
+        print(e)
+        return None
 
 def analyze_image(image_url):
     """ Function to analyze the image using an AI model """
