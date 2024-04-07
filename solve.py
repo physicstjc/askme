@@ -12,6 +12,7 @@ from PIL import Image
 import io
 import tempfile
 import shutil
+from PIL import UnidentifiedImageError
 
 s3_client = boto3.client('s3', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'], aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
 
@@ -63,13 +64,16 @@ def main():
     uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 
     if uploaded_file is not None:
-        # Upload file to S3 and get the file URL
-        file_url = upload_to_s3(uploaded_file)
-
-        # Display the uploaded image
-        image = Image.open(io.BytesIO(uploaded_file.getvalue()))
-        st.image(image, caption='Uploaded Image', use_column_width=True)
-
+        try:
+            # Attempt to open the uploaded image file
+            image = Image.open(io.BytesIO(uploaded_file.getvalue()))
+            st.image(image, caption='Uploaded Image', use_column_width=True)
+        except UnidentifiedImageError:
+            st.error("The file you uploaded is not a valid image. Please upload a valid image file.")
+            return  # Exit the function if the image is invalid
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
+            return  # Exit the function in case of other errors
         if st.button('Analyze'):
             try:
                 # Analyze the image using its URL
