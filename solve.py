@@ -32,6 +32,8 @@ def upload_to_s3(uploaded_file, bucket_name, object_name=None):
 def analyze_image(image_url):
     """ Function to analyze the image using an AI model """
     try:
+	print("Image URL being analyzed:", image_url)  # For debugging
+	    
         response = client.chat.completions.create(
             model="gpt-4-vision-preview",
             messages=[
@@ -43,7 +45,7 @@ def analyze_image(image_url):
                     ]
                 }
             ],
-            max_tokens=300
+            max_tokens=600
         )
 
         if response.status_code == 200:
