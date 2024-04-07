@@ -24,7 +24,7 @@ def save_messages_to_s3(messages):
             file.write(f"{message['role']}: {message['content']}\n")
 
     # Upload the file to S3 bucket
-    s3.upload_file(filename, 'your-s3-bucket-name', filename)
+    s3.upload_file(filename, 'askphysics', filename)
 
     # Remove the temporary file
     os.remove(filename)
