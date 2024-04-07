@@ -17,13 +17,7 @@ from PIL import UnidentifiedImageError
 s3_client = boto3.client('s3', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'], aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
 
 def upload_to_s3(uploaded_file, bucket_name, object_name=None):
-    """Upload a file to an S3 bucket
 
-    :param uploaded_file: File to upload
-    :param bucket_name: Bucket to upload to
-    :param object_name: S3 object name. If not specified then file_name is used
-    :return: True if file was uploaded, else False
-    """
     if object_name is None:
         object_name = uploaded_file.name
 
@@ -76,7 +70,7 @@ def main():
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
         # Upload to S3
-        s3_bucket_name = "your_s3_bucket_name"  # replace with your bucket name
+        s3_bucket_name = "askphysics"  # replace with your bucket name
         file_url = upload_to_s3(uploaded_file, s3_bucket_name)
         # if file_url:
         #    st.success(f"Uploaded to S3 at URL: {file_url}")
