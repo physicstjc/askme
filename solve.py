@@ -22,10 +22,14 @@ def upload_image():
         bytes_data = uploaded_file.getvalue()
         return Image.open(io.BytesIO(bytes_data))
     return None
-
-def analyze_image(image):
+	
+def analyze_image(image, image_name):
     """ Function to analyze the image using an AI model """
-    # Assuming 'client' is your API client configured for the 'gpt-4-vision-preview'
+
+    # Constructing the URL for the uploaded image
+    base_url = "https://solvephy.streamlit.app/~/+/media/"
+    image_url = f"{base_url}{image_name}"
+
     response = client.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
@@ -41,10 +45,10 @@ def analyze_image(image):
     )
 
     if response.status_code == 200:
-        # Handle and parse the response
         return response.json()  # Adjust based on actual response format
     else:
         raise Exception("Error in API response")
+
 
 
 def display_results(results):
@@ -52,16 +56,22 @@ def display_results(results):
     st.write("Analysis Results:")
     st.write(results)
 
+
 def main():
     st.title("Physics Question Analyzer using AI")
     
-    image = upload_image()
+    uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 
-    if image is not None:
+    if uploaded_file is not None:
+        # Display the uploaded image
+        image = Image.open(io.BytesIO(uploaded_file.getvalue()))
         st.image(image, caption='Uploaded Image', use_column_width=True)
+
+        # Analyze the image when the button is clicked
         if st.button('Analyze'):
             try:
-                results = analyze_image(image)
+                # Pass both the image and its name to the analyze function
+                results = analyze_image(image, uploaded_file.name)
                 display_results(results)
             except Exception as e:
                 st.error(f"An error occurred: {e}")
