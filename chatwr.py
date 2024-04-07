@@ -13,21 +13,18 @@ s3 = boto3.client('s3',
                   aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
 
 # Function to store messages in AWS S3 bucket
-def save_messages_to_s3(messages):
+
+# Function to store messages in a CSV file
+def save_messages_to_csv(messages):
     # Generate a unique filename with timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    filename = f"conversation_{timestamp}.txt"
-    
-    # Write messages to a temporary file
-    with open(filename, "w") as file:
+    filename = "conversation_history.csv"
+
+    # Write messages to CSV file
+    with open(filename, mode='a', newline='') as file:
+        writer = csv.writer(file)
         for message in messages:
-            file.write(f"{message['role']}: {message['content']}\n")
-
-    # Upload the file to S3 bucket
-    s3.upload_file(filename, 'askphysics', filename)
-
-    # Remove the temporary file
-    os.remove(filename)
+            writer.writerow([message['role'], message['content']])
 
 st.title("Physics Tutor")
 st.text("Ask me a Physics question!")
@@ -68,5 +65,4 @@ if prompt := st.chat_input("What is up?"):
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
     
-    # Save messages to AWS S3
-    save_messages_to_s3(st.session_state.messages)
+    save_messages_to_csv(st.session_state.messages)
