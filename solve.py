@@ -21,6 +21,7 @@ def upload_to_s3(uploaded_file, bucket_name, object_name=None):
     if object_name is None:
         object_name = uploaded_file.name
 
+    uploaded_file.seek(0)  # Reset file pointer
     try:
         # Upload the file
         s3_client.upload_fileobj(uploaded_file, "askphysics", object_name)
