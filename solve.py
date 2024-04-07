@@ -68,8 +68,8 @@ def main():
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
         # To see details
-        file_details = {"FileName": uploaded_file.name, "FileType": uploaded_file.type, "FileSize": uploaded_file.size}
-        st.write(file_details)
+        # file_details = {"FileName": uploaded_file.name, "FileType": uploaded_file.type, "FileSize": uploaded_file.size}
+        # st.write(file_details)
 
         # Display the image
         image = Image.open(uploaded_file)
@@ -78,10 +78,20 @@ def main():
         # Upload to S3
         s3_bucket_name = "your_s3_bucket_name"  # replace with your bucket name
         file_url = upload_to_s3(uploaded_file, s3_bucket_name)
-        if file_url:
-            st.success(f"Uploaded to S3 at URL: {file_url}")
-        else:
-            st.error("Failed to upload to S3.")
+        # if file_url:
+        #    st.success(f"Uploaded to S3 at URL: {file_url}")
+        # else:
+        #    st.error("Failed to upload to S3.")
+
+        if st.button('Analyze'):
+            try:
+                # Analyze the image using its URL
+                results = analyze_image(file_url)
+                display_results(results)
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
+
+
 
 def display_results(results):
     """ Function to display the analysis results """
