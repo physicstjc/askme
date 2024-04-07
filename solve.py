@@ -41,7 +41,7 @@ def analyze_image():
                     "role": "user",
                     "content": [
                         {"type": "text", "text": "What’s in this image?"},
-                        {"type": "image_url", "image_url": {"url": file_url}}
+                        {"type": "image_url", "image_url": {"url": f"https://askphysics.s3.ap-southeast-1.amazonaws.com/{object_name}"}}
                     ]
                 }
             ],
