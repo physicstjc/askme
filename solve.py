@@ -51,7 +51,7 @@ def analyze_image(image_url):
             return response.json()  # Adjust based on actual response format
         else:
             # Detailed error message
-            st.write("API response error: ", response.json())
+            print("API Response Error:", response.json())  # Log the error response
             raise Exception("Error in API response")
     except Exception as e:
         # Detailed exception message
