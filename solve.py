@@ -11,11 +11,6 @@ import io
 import tempfile
 import shutil
 
-st.title("Physics Tutor")
-st.text("Ask me a Physics question!")
-#Change here onwards
-
-
 def upload_image():
     """ Function to upload an image and return it """
     uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
