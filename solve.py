@@ -75,10 +75,10 @@ def main():
         # Upload to S3
         s3_bucket_name = "askphysics"  # replace with your bucket name
         file_url = upload_to_s3(uploaded_file, s3_bucket_name)
-        # if file_url:
-        #    st.success(f"Uploaded to S3 at URL: {file_url}")
-        # else:
-        #    st.error("Failed to upload to S3.")
+        if file_url:
+            st.success(f"Uploaded to S3 at URL: {file_url}")
+        else:
+            st.error("Failed to upload to S3.")
 
         if st.button('Analyze'):
             try:
