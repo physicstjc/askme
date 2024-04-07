@@ -40,7 +40,7 @@ def analyze_image(image_url):
                     "role": "user",
                     "content": [
                         {"type": "text", "text": "What’s in this image?"},
-                        {"type": "image_url", "image_url": {"url": image_url}}
+                        {"type": "image_url", "image_url": {"url": file_url}}
                     ]
                 }
             ],
