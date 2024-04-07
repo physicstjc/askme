@@ -4,3 +4,4 @@ streamlit-lottie
 streamlit-webrtc
 openai
 streamlit-chat 
+boto3
