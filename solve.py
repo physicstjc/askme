@@ -25,7 +25,7 @@ def upload_to_s3(uploaded_file, bucket_name, object_name=None):
     uploaded_file.seek(0)  # Reset file pointer
     try:
         # Upload the file
-        s3_client.upload_fileobj(uploaded_file, "askphysics", object_name, ExtraArgs={"ACL": "public-read"})
+        s3_client.upload_fileobj(uploaded_file, "askphysics", object_name})
         return f"https://askphysics.s3.ap-southeast-1.amazonaws.com/{object_name}"
     except Exception as e:
         print(e)
