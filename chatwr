@@ -1,15 +1,33 @@
 import os
 import streamlit as st
 from openai import OpenAI
+import boto3
+from datetime import datetime
 
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 
-# Function to store messages in a text file
-def save_messages(messages):
-    with open("conversation.txt", "a") as file:
+# Initialize AWS S3 client
+s3 = boto3.client('s3',
+                  aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+                  aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
+
+# Function to store messages in AWS S3 bucket
+def save_messages_to_s3(messages):
+    # Generate a unique filename with timestamp
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    filename = f"conversation_{timestamp}.txt"
+    
+    # Write messages to a temporary file
+    with open(filename, "w") as file:
         for message in messages:
             file.write(f"{message['role']}: {message['content']}\n")
+
+    # Upload the file to S3 bucket
+    s3.upload_file(filename, 'your-s3-bucket-name', filename)
+
+    # Remove the temporary file
+    os.remove(filename)
 
 st.title("Physics Tutor")
 st.text("Ask me a Physics question!")
@@ -50,5 +68,5 @@ if prompt := st.chat_input("What is up?"):
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
     
-    # Save messages to file
-    save_messages(st.session_state.messages)
+    # Save messages to AWS S3
+    save_messages_to_s3(st.session_state.messages)
