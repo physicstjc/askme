@@ -22,9 +22,14 @@ def upload_image():
         bytes_data = uploaded_file.getvalue()
         return Image.open(io.BytesIO(bytes_data))
     return None
-def analyze_image(image_url):
+
+def analyze_image(image, image_name):
     """ Function to analyze the image using an AI model """
     
+    # Constructing the URL for the uploaded image
+    base_url = "https://solvephy.streamlit.app/~/+/media/"
+    image_url = f"{base_url}{image_name}"
+
     # Debug: Print the image URL
     st.write("Debug - Image URL: ", image_url)
 
@@ -54,8 +59,7 @@ def analyze_image(image_url):
         st.error(f"An error occurred: {str(e)}")
         return None
 
-# Your main function remains the same
-
+# The rest of your code remains the same
 
 
 
