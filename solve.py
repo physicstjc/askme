@@ -22,32 +22,40 @@ def upload_image():
         bytes_data = uploaded_file.getvalue()
         return Image.open(io.BytesIO(bytes_data))
     return None
-	
-def analyze_image(image, image_name):
+def analyze_image(image_url):
     """ Function to analyze the image using an AI model """
+    
+    # Debug: Print the image URL
+    st.write("Debug - Image URL: ", image_url)
 
-    # Constructing the URL for the uploaded image
-    base_url = "https://solvephy.streamlit.app/~/+/media/"
-    image_url = f"{base_url}{image_name}"
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4-vision-preview",
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "What’s in this image?"},
+                        {"type": "image_url", "image_url": {"url": image_url}}
+                    ]
+                }
+            ],
+            max_tokens=300
+        )
 
-    response = client.chat.completions.create(
-        model="gpt-4-vision-preview",
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "What’s in this image?"},
-                    {"type": "image_url", "image_url": {"url": image_url}}
-                ]
-            }
-        ],
-        max_tokens=300
-    )
+        if response.status_code == 200:
+            return response.json()  # Adjust based on actual response format
+        else:
+            # Detailed error message
+            st.write("API response error: ", response.json())
+            raise Exception("Error in API response")
+    except Exception as e:
+        # Detailed exception message
+        st.error(f"An error occurred: {str(e)}")
+        return None
 
-    if response.status_code == 200:
-        return response.json()  # Adjust based on actual response format
-    else:
-        raise Exception("Error in API response")
+# Your main function remains the same
+
 
 
 
