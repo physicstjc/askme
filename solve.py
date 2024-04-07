@@ -31,9 +31,8 @@ def upload_to_s3(uploaded_file, bucket_name, object_name=None):
         print(e)
         return None
 
-def analyze_image(image_url):
-    """ Function to analyze the image using an AI model """
-    print("Image URL being analyzed:", image_url)    
+def analyze_image():
+    """ Function to analyze the image using an AI model """ 
     try:
         response = client.chat.completions.create(
             model="gpt-4-vision-preview",
@@ -42,7 +41,7 @@ def analyze_image(image_url):
                     "role": "user",
                     "content": [
                         {"type": "text", "text": "What’s in this image?"},
-                        {"type": "image_url", "image_url": {"url": image_url}}
+                        {"type": "image_url", "image_url": {"url": {file_url}}}
                     ]
                 }
             ],
@@ -83,7 +82,7 @@ def main():
         if st.button('Analyze'):
             try:
                 # Analyze the image using its URL
-                results = analyze_image(file_url)
+                results = analyze_image()
                 display_results(results)
             except Exception as e:
                 st.error(f"An error occurred: {e}")
