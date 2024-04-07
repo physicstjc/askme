@@ -17,14 +17,16 @@ s3_client = boto3.client('s3', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID']
 
 def upload_to_s3(uploaded_file):
     if uploaded_file is not None:
-        # Use the file name as the S3 object name
         file_name = uploaded_file.name
-        s3_client.upload_fileobj(uploaded_file, askphysics, file_name)
+        uploaded_file.seek(0)  # Reset file pointer
 
-        # Generate a URL for the uploaded file
-        file_url = f"https://askphysics.s3.amazonaws.com/{file_name}"
-        return file_url
-    return None
+        try:
+            s3_client.upload_fileobj(uploaded_file, "askphysics", file_name)
+            file_url = f"https://askphysics.s3.amazonaws.com/{file_name}"
+            return file_url
+        except Exception as e:
+            st.error(f"Failed to upload to S3: {e}")
+            return None
 
 def analyze_image(image_url):
     """ Function to analyze the image using an AI model """
