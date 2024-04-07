@@ -1,5 +1,7 @@
 import os
+import boto3
 import streamlit as st
+from PIL import Image
 from openai import OpenAI
 # from openai import OpenAI
 client = OpenAI(
@@ -11,13 +13,17 @@ import io
 import tempfile
 import shutil
 
-def upload_image():
-    """ Function to upload an image and return it """
-    uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
+s3_client = boto3.client('s3', aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'], aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
+
+def upload_to_s3(uploaded_file):
     if uploaded_file is not None:
-        # To read file as bytes:
-        bytes_data = uploaded_file.getvalue()
-        return Image.open(io.BytesIO(bytes_data))
+        # Use the file name as the S3 object name
+        file_name = uploaded_file.name
+        s3_client.upload_fileobj(uploaded_file, askphysics, file_name)
+
+        # Generate a URL for the uploaded file
+        file_url = f"https://askphysics.s3.amazonaws.com/{file_name}"
+        return file_url
     return None
 
 def analyze_image(image_url):
@@ -48,32 +54,32 @@ def analyze_image(image_url):
         st.error(f"An error occurred: {str(e)}")
         return None
 
-def display_results(results):
-    """ Function to display the analysis results """
-    st.write("Analysis Results:")
-    st.write(results)
-
 def main():
-    st.title("Physics Question Analyzer using AI")
-    
+    st.title("Physics Tutor")
+    st.text("Ask me a Physics question!")
+
     uploaded_file = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg"])
 
     if uploaded_file is not None:
+        # Upload file to S3 and get the file URL
+        file_url = upload_to_s3(uploaded_file)
+
         # Display the uploaded image
         image = Image.open(io.BytesIO(uploaded_file.getvalue()))
         st.image(image, caption='Uploaded Image', use_column_width=True)
 
-        # Construct the URL for the uploaded image
-        base_url = "https://solvephy.streamlit.app/~/+/media/"
-        image_url = f"{base_url}{uploaded_file.name}"
-
-        # Analyze the image when the button is clicked
         if st.button('Analyze'):
             try:
-                results = analyze_image(image_url)
+                # Analyze the image using its URL
+                results = analyze_image(file_url)
                 display_results(results)
             except Exception as e:
                 st.error(f"An error occurred: {e}")
 
+def display_results(results):
+    """ Function to display the analysis results """
+    st.write("Analysis Results:")
+    st.write(results)
+	
 if __name__ == "__main__":
     main()
