@@ -20,13 +20,14 @@ s3 = boto3.client('s3',
 def save_messages_to_csv(messages):
     # Generate a unique filename with timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    filename = "conversation_history.csv"
+    filename = f"conversation_history_{timestamp}.csv"  # Added timestamp to filename
 
     # Write messages to CSV file
     with open(filename, mode='a', newline='') as file:
         writer = csv.writer(file)
         for message in messages:
             writer.writerow([message['role'], message['content']])
+
 
 st.title("Physics Socratic Tutor")
 st.text("Let's get started. Ask me a Physics question!")
