@@ -28,8 +28,8 @@ def save_messages_to_csv(messages):
         for message in messages:
             writer.writerow([message['role'], message['content']])
 
-st.title("Physics Tutor")
-st.text("Ask me a Physics question!")
+st.title("Physics Socratic Tutor")
+st.text("Let's get started. Ask me a Physics question!")
 
 # Set a default model
 if "openai_model" not in st.session_state:
