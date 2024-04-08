@@ -35,7 +35,7 @@ st.text("Let's plan an investigation together")
 
 
 # List of images
-images = ["https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballinwater.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballwithmoremass.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-fanonboat.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-horseoncart.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-resultantforceattop.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-stopmoving.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-truckandcar.png"]
+images = ["https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballinwater.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballwithmoremass.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-fanonboat.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-horseandcart.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-resultantforceattop.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-stopmoving.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-truckandcar.png"]
 # Corresponding list of captions
 captions = ["Image 1", "Image 2", "Image 3","Image 4","Image 5","Image 6","Image 7"]
 
