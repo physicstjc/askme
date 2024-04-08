@@ -35,7 +35,9 @@ st.text("Let's plan an investigation together")
 
 
 # List of images
-images = ["https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballinwater.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballwithmoremass.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-fanonboat.png"]
+images = ["https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballinwater.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballwithmoremass.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-fanonboat.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-horseoncart.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-resultantforceattop.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-stopmoving.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-truckandcar.png"]
+# Corresponding list of captions
+captions = ["Image 1", "Image 2", "Image 3","Image 4","Image 5","Image 6","Image 7"]
 
 # State for current image index
 if 'current_image' not in st.session_state:
@@ -45,12 +47,16 @@ if 'current_image' not in st.session_state:
 if st.button("Previous"):
     st.session_state.current_image = (st.session_state.current_image - 1) % len(images)
 
+# Display the current image
+st.image(images[st.session_state.current_image], width=300)
+# Display caption for the current image
+st.write(captions[st.session_state.current_image])
+
 # Button to go to the next image
 if st.button("Next"):
     st.session_state.current_image = (st.session_state.current_image + 1) % len(images)
 
-# Display the current image
-st.image(images[st.session_state.current_image], width=300)
+
 
 # Set a default model
 if "openai_model" not in st.session_state:
@@ -58,8 +64,9 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a high school Physics teacher who who asks socratic questions without giving the actual answers directly. He will guide students to plan an experiment by asking probing questions such as identifying the independent and dependent variables, conditions to be kept constant, the ways to adjust the variables, the instruments to use and the type of graph to plot. Keep to simple laboratory equipment that is available in a normal science laboratory."}]
+    st.session_state.messages = [{"role": "system", "content": ""}]
 
+# For planning assistant: Speak like a high school Physics teacher who who asks socratic questions without giving the actual answers directly. He will guide students to plan an experiment by asking probing questions such as identifying the independent and dependent variables, conditions to be kept constant, the ways to adjust the variables, the instruments to use and the type of graph to plot. Keep to simple laboratory equipment that is available in a normal science laboratory.
 # For socratic tutor: Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning
 
 # Display chat messages from history on app rerun
