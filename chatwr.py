@@ -5,8 +5,6 @@ import boto3
 from datetime import datetime
 import csv
 from datetime import datetime
-from streamlit_carousel import carousel
-
 
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
@@ -35,27 +33,24 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
 st.title("Physics Experiment Planner")
 st.text("Let's plan an investigation together")
 
-test_items = [
-    dict(
-        title="Slide 1",
-        text="Ping pong ball on water",
-        interval=None,
-        img="https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballinwater.png",
-    ),
-    dict(
-        title="Slide 2",
-        text="Balls of different mass falling",
-        img="https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballwithmoremass.png",
-    ),
-    dict(
-        title="Slide 3",
-        text="Fan on boat",
-        img="https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-fanonboat.png",
-    ),
-]
 
-carousel(items=test_items, width=1)
+# List of images
+images = ["https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballinwater.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballwithmoremass.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-fanonboat.png"]
 
+# State for current image index
+if 'current_image' not in st.session_state:
+    st.session_state.current_image = 0
+
+# Button to go to the previous image
+if st.button("Previous"):
+    st.session_state.current_image = (st.session_state.current_image - 1) % len(images)
+
+# Button to go to the next image
+if st.button("Next"):
+    st.session_state.current_image = (st.session_state.current_image + 1) % len(images)
+
+# Display the current image
+st.image(images[st.session_state.current_image], width=300)
 
 # Set a default model
 if "openai_model" not in st.session_state:
