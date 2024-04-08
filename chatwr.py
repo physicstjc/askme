@@ -30,8 +30,8 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
     s3.upload_file(Filename=filename, Bucket=bucket_name, Key=filename)
 
 
-st.title("Physics Experiment Planner")
-st.text("Let's plan an investigation together")
+st.title("Argue with AI")
+st.text("Tell us what you think about the characters' views")
 
 
 # List of images
