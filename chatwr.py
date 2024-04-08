@@ -30,8 +30,8 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
     s3.upload_file(Filename=filename, Bucket=bucket_name, Key=filename)
 
 
-st.title("Physics Socratic Tutor")
-st.text("Let's get started. Ask me a Physics question!")
+st.title("Physics Experiment Planner")
+st.text("Let's plan an investigation together")
 
 # Set a default model
 if "openai_model" not in st.session_state:
@@ -39,7 +39,9 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning"}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a high school Physics teacher who will guide students to plan an experiment by asking probing questions such as identifying the independent and dependent variables, conditions to be kept constant, the ways to adjust the variables, the instruments to use and the type of graph to plot. Keep to simple laboratory equipment that is available in a normal science laboratory."}]
+
+# For socratic tutor: Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
