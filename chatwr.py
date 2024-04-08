@@ -56,6 +56,15 @@ st.write(captions[st.session_state.current_image])
 if st.button("Next"):
     st.session_state.current_image = (st.session_state.current_image + 1) % len(images)
 
+if "image_descriptions" not in st.session_state:
+    st.session_state.image_descriptions = {
+        "Image 1": "A cartoon that shows a boy saying that a heavier object will fall faster because it has more mass, when in fact, both objects should reach the ground at the same time if air resistance is negligible.",
+        "Image 2": "A boy is on a boat with a fan attached to the boat that is blow on a sail. The boy assumed that the fan and move the sailboat forward. However, this is a misconception as the backward force exerted by the wind on the fan is equal in magnitude to the forward force exerted by the wind on the sail.",
+        "Image 3": "A horse with a cart harnessed to it is cannot move as the cart is pulling it back with the same force that the horse is exerted on the cart. This is a misunderstanding of Newton's third law, as the action-reaction forces act on different bodies and hence, do not cancel each other out.",
+        "Image 4": "A boy watches a ball being thrown upward and assumes that at the top, the ball is experiences no resultant force as it is stationary. On the contrary, the ball still experiences its weight and hence, is able to continue its acceleration, thus making its way down thereafter.",
+        "Image 5": "A boy is speaking to his teacher saying that if a rocket in space runs out of fuel, it will come to a stop. However, there are no dissipative forces in space so by Newton's First law, the rocket will continue its motion even if there is no force acting on it.",
+        "Image 6": "A boy claims that a truck which has more mass than a car, is exerting a larger force on the car during collision. However, this violates Newton's third law, which states that the forces are equal in magnitude.",
+    }
 
 # Set a default model
 if "openai_model" not in st.session_state:
@@ -63,7 +72,7 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The user will be prompted for an image which he would like to discuss. Image 1 is a cartoon that shows a boy saying that a heavier object will fall faster because it has more mass, when in fact, both objects should reach the ground at the same time if air resistance is negligible."}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The user will be prompted for an image which he would like to discuss."}]
 
 # For planning assistant: Speak like a high school Physics teacher who who asks socratic questions without giving the actual answers directly. He will guide students to plan an experiment by asking probing questions such as identifying the independent and dependent variables, conditions to be kept constant, the ways to adjust the variables, the instruments to use and the type of graph to plot. Keep to simple laboratory equipment that is available in a normal science laboratory.
 # For socratic tutor: Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning
@@ -74,14 +83,21 @@ for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
+
 # Accept user input
 if prompt := st.chat_input("Which image would you like to discuss? e.g. type 'Image 1' if you want to discuss the first image."):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        st.markdown(prompt)
 
+    # Check if prompt is about an image and retrieve description
+    if prompt.startswith("Image"):
+        image_key = prompt.split()[0]  # Assuming prompt like 'Image 1'
+        image_description = st.session_state.image_descriptions.get(image_key, "")
+        if image_description:
+            # Append image description as a system message
+            st.session_state.messages.append({"role": "system", "content": image_description})
+
+    # Process the conversation with AI
     with st.chat_message("assistant"):
         stream = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -92,7 +108,7 @@ if prompt := st.chat_input("Which image would you like to discuss? e.g. type 'Im
             stream=True,
         )
         response = st.write_stream(stream)
-    
+      
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
     
