@@ -24,7 +24,7 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
     # Upload file to S3
     s3.upload_file(Filename=filename, Bucket=bucket_name, Key=filename)
 st.title("AI-assisted argumentation")
-st.text("Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop.")
+st.markdown("Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop.")
 
 
 # Display the image
