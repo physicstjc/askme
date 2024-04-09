@@ -103,7 +103,7 @@ if prompt := st.chat_input("What do you think?"):
                 {"role": m["role"], "content": m["content"]}
                 for m in st.session_state.messages
             ],
-            stream=True,
+            stream=False,
         )
         response = st.write_stream(stream)
     
