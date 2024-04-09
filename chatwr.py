@@ -24,7 +24,7 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
     # Upload file to S3
     s3.upload_file(Filename=filename, Bucket=bucket_name, Key=filename)
 st.title("AI-assisted argumentation")
-st.markdown("ZTwo balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop.")
+st.markdown("Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop.")
 
 
 # Display the image
@@ -37,7 +37,7 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who assesses the response of the student based on Paul and Elder's Intellectual Standards. Help the user get to the answer by asking guiding questions to scaffold the learning. The question is: Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop."}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who assesses the response of the student based on clarity, precision, accuracy, logic, relevance and significance. Help the user get to the answer by asking guiding questions to scaffold the learning. The question is: Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop.  The success criteria for the user is to be able to explain that both balls will move at the same speed once the truck comes to an abrupt stop, according to Newton's first law, since there will be no net force acting on them since the floor of the truck is smooth and there is no friction. "}]
 
 # Speak like a teacher who asks socratic question one by one without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The success criteria for the user is to be able to explain that both balls will move at the same speed once the truck comes to an abrupt stop, according to Newton's first law, since there will be no net force acting on them since the floor of the truck is smooth and there is no friction. Give responses that are no longer than 4 lines.
 
