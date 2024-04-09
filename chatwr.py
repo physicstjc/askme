@@ -43,15 +43,14 @@ captions = ["Image 1", "Image 2", "Image 3","Image 4","Image 5","Image 6"]
 if 'current_image' not in st.session_state:
     st.session_state.current_image = 0
 
-# Button to go to the previous image
-if st.button("Previous"):
-    st.session_state.current_image = (st.session_state.current_image - 1) % len(images)
-
 # Display the current image
 st.image(images[st.session_state.current_image], width=300)
 # Display caption for the current image
 st.write(captions[st.session_state.current_image])
 
+# Button to go to the previous image
+if st.button("Previous"):
+    st.session_state.current_image = (st.session_state.current_image - 1) % len(images)
 # Button to go to the next image
 if st.button("Next"):
     st.session_state.current_image = (st.session_state.current_image + 1) % len(images)
@@ -72,7 +71,7 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The user will be prompted for an image which he would like to discuss. Question the user's knowledge of the relevant Newton's law and his assumptions. Give responses that are no longer than 4 lines."}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The user will be prompted for an image which he would like to discuss. Question the user on whether he thinks the protagonist is correct and his assumptions. Give responses that are no longer than 4 lines."}]
 
 # For planning assistant: Speak like a high school Physics teacher who who asks socratic questions without giving the actual answers directly. He will guide students to plan an experiment by asking probing questions such as identifying the independent and dependent variables, conditions to be kept constant, the ways to adjust the variables, the instruments to use and the type of graph to plot. Keep to simple laboratory equipment that is available in a normal science laboratory.
 # For socratic tutor: Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning
@@ -83,9 +82,9 @@ for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-
+st.text("Which image would you like to discuss? e.g. type 'Image 1' if you want to discuss the first image.")
 # Accept user input
-if prompt := st.chat_input("Which image would you like to discuss? e.g. type 'Image 1' if you want to discuss the first image."):
+if prompt := st.chat_input("What do you think?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
 
