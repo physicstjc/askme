@@ -4,12 +4,15 @@ from openai import OpenAI
 import boto3
 from datetime import datetime
 import csv
+from PIL import Image
+
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 # Initialize AWS S3 client
 s3 = boto3.client('s3',
                   aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
                   aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
+
 def save_messages_to_csv_and_upload(messages, bucket_name):
     # Generate a unique filename with timestamp
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -21,8 +24,14 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
             writer.writerow([message['role'], message['content']])
     # Upload file to S3
     s3.upload_file(Filename=filename, Bucket=bucket_name, Key=filename)
-st.title("Practice with AI")
-st.text("Which question would you like to discuss?")
+st.title("AI-assisted argumentation")
+st.text("Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop.")
+
+# Load your image (make sure the image is in the same directory as your script or provide the full path)
+image = Image.open('https://askphysics.s3.ap-southeast-1.amazonaws.com/trucktopview.png')
+
+# Display the image
+st.image(image, caption='Top View of Truck with Two Balls of Different Masses', use_column_width=True)
 
 
 # Set a default model
@@ -31,7 +40,7 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. Give responses that are no longer than 4 lines."}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The success criteria for the user is to be able to explain that both balls will move at the same speed once the truck comes to an abrupt stop, according to Newton's first law, since there will be no net force acting on them. Give responses that are no longer than 4 lines."}]
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
