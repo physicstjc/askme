@@ -94,9 +94,6 @@ if prompt := st.chat_input("What do you think?"):
         if image_description:
             # Append image description as a system message
             st.session_state.messages.append({"role": "system", "content": image_description})
-
-    # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": response})
   
     # Process the conversation with AI
     with st.chat_message("assistant"):
@@ -110,7 +107,8 @@ if prompt := st.chat_input("What do you think?"):
         )
         response = st.write_stream(stream)
     
-    
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": response})
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
 
 
