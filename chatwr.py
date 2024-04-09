@@ -4,7 +4,6 @@ from openai import OpenAI
 import boto3
 from datetime import datetime
 import csv
-from PIL import Image
 
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
@@ -27,11 +26,9 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
 st.title("AI-assisted argumentation")
 st.text("Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop.")
 
-# Load your image (make sure the image is in the same directory as your script or provide the full path)
-image = Image.open('https://askphysics.s3.ap-southeast-1.amazonaws.com/trucktopview.png')
 
 # Display the image
-st.image(image, caption='Top View of Truck with Two Balls of Different Masses', use_column_width=True)
+st.image('https://askphysics.s3.ap-southeast-1.amazonaws.com/trucktopview.png', caption='Top View of Truck with Two Balls of Different Masses', use_column_width=True)
 
 
 # Set a default model
