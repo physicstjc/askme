@@ -90,7 +90,7 @@ if prompt := st.chat_input("What do you think?"):
     # Check if prompt is about an image and retrieve description
     if prompt.startswith("Image"):
         image_key = prompt.split()[0]  # Assuming prompt like 'Image 1'
-        image_description = st.session_state.image_descriptions.get(image_key, "")
+        image_description = st.session_state.image_descriptions.get(image_key - 1, "")
         if image_description:
             # Append image description as a system message
             st.session_state.messages.append({"role": "system", "content": image_description})
