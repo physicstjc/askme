@@ -58,14 +58,13 @@ try:
     )
 
     if response:
-        for choice in response.choices:
-            ai_response = choice.message['content']  # Corrected access to the response content
-            with st.chat_message("assistant"):
-                st.write(ai_response)
-            
-            # Update chat history and save messages
-            st.session_state.messages.append({"role": "assistant", "content": ai_response})
-            save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
+        ai_response = response.choices[0].text  # Corrected access to the response content
+        with st.chat_message("assistant"):
+            st.write(ai_response)
+        
+        # Update chat history and save messages
+        st.session_state.messages.append({"role": "assistant", "content": ai_response})
+        save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
