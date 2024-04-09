@@ -43,9 +43,11 @@ if 'current_image' not in st.session_state:
     st.session_state.current_image = 1
 
 # Display the current image
-st.image(images[st.session_state.current_image], width=300)
-# Display caption for the current image
-st.write(captions[st.session_state.current_image])
+current_index = st.session_state.current_image
+if 0 <= current_index < len(images):
+    st.image(images[current_index], width=300)
+    st.write(captions[current_index])
+
 
 # Button to go to the previous image
 if st.button("Previous"):
@@ -83,30 +85,30 @@ for message in st.session_state.messages:
 
 # Accept user input
 if prompt := st.chat_input("What do you think?"):
-    # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    # Check if prompt is about an image and retrieve description
-    if prompt.startswith("Image"):
-        image_key = prompt.split()[0]  # Assuming prompt like 'Image 1'
-        image_description = st.session_state.image_descriptions.get(image_key, "")
-        if image_description:
-            # Append image description as a system message
+    # Check for image prompt and handle descriptions
+    if prompt.lower().startswith("image"):
+        image_number = prompt.split()[1] if len(prompt.split()) > 1 else None
+        if image_number and image_number.isdigit():
+            image_key = "Image " + image_number
+            image_description = st.session_state.image_descriptions.get(image_key, "No description available.")
             st.session_state.messages.append({"role": "system", "content": image_description})
   
-    # Process the conversation with AI
+    # Generate and display response from AI
+    stream = client.chat.completions.create(
+        model=st.session_state["openai_model"],
+        messages=[
+            {"role": m["role"], "content": m["content"]}
+            for m in st.session_state.messages
+        ],
+        stream=False,
+    )
+    response = stream.choices[0].message['content']
     with st.chat_message("assistant"):
-        stream = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=False,
-        )
-        response = st.write_stream(stream)
+        st.write(response)
     
-    # Add assistant response to chat history
+    # Update chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
 
