@@ -47,28 +47,28 @@ for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 # Generate and display response from AI
+# Generate and display response from AI
 try:
-    stream = client.chat.completions.create(
+    response = client.chat.completions.create(
         model=st.session_state["openai_model"],
         messages=[
             {"role": m["role"], "content": m["content"]}
             for m in st.session_state.messages
-        ],
-        stream=True,
+        ]
     )
 
-    for message in stream.messages():
-        if message['role'] == 'assistant':
-            response = message['content']
-            with st.chat_message("assistant"):
-                st.write(response)
-            
-            # Update chat history and save messages
-            st.session_state.messages.append({"role": "assistant", "content": response})
-            save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
+    if response:
+        ai_response = response.choices[0].message['content']
+        with st.chat_message("assistant"):
+            st.write(ai_response)
+        
+        # Update chat history and save messages
+        st.session_state.messages.append({"role": "assistant", "content": ai_response})
+        save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
+
 
   
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
