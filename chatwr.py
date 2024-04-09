@@ -4,7 +4,6 @@ from openai import OpenAI
 import boto3
 from datetime import datetime
 import csv
-from datetime import datetime
 
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
@@ -21,7 +20,7 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
     filename = f"conversation_history_{timestamp}.csv"
 
     # Write messages to CSV file
-    with open(filename, mode='a', newline='') as file:
+    with open(filename, mode='w', newline='') as file:
         writer = csv.writer(file)
         for message in messages:
             writer.writerow([message['role'], message['content']])
