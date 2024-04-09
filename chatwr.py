@@ -40,7 +40,7 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The user will be prompted for an image which he would like to discuss. Question the user on whether he thinks the child's understanding is correct and ask for his assumptions. Give responses that are no longer than 4 lines."}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. Give responses that are no longer than 4 lines."}]
 
 
 # Display chat messages from history on app rerun
@@ -62,11 +62,7 @@ if prompt := st.chat_input("What do you think?"):
         ],
         stream=True,
     )
-    try:
-        response = stream.choices[0].text
-    except AttributeError:
-        response = "Sorry, I couldn't process that request."
-    
+
     with st.chat_message("assistant"):
         st.write(response)
     
