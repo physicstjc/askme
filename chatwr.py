@@ -57,12 +57,12 @@ if st.button("Next"):
 
 if "image_descriptions" not in st.session_state:
     st.session_state.image_descriptions = {
-        "Image 1": "A cartoon that shows a boy saying that a heavier object will fall faster because it has more mass, when in fact, both objects should reach the ground at the same time if air resistance is negligible.",
-        "Image 2": "A boy is on a boat with a fan attached to the boat that is blow on a sail. The boy assumed that the fan and move the sailboat forward. However, this is a misconception as the backward force exerted by the wind on the fan is equal in magnitude to the forward force exerted by the wind on the sail.",
-        "Image 3": "A horse with a cart harnessed to it is cannot move as the cart is pulling it back with the same force that the horse is exerted on the cart. This is a misunderstanding of Newton's third law, as the action-reaction forces act on different bodies and hence, do not cancel each other out.",
-        "Image 4": "A boy watches a ball being thrown upward and assumes that at the top, the ball is experiences no resultant force as it is stationary. On the contrary, the ball still experiences its weight and hence, is able to continue its acceleration, thus making its way down thereafter.",
-        "Image 5": "A boy is speaking to his teacher saying that if a rocket in space runs out of fuel, it will come to a stop. However, there are no dissipative forces in space so by Newton's First law, the rocket will continue its motion even if there is no force acting on it.",
-        "Image 6": "A boy claims that a truck which has more mass than a car, is exerting a larger force on the car during collision. However, this violates Newton's third law, which states that the forces are equal in magnitude.",
+        "Image a": "A cartoon that shows a boy saying that a heavier object will fall faster because it has more mass, when in fact, both objects should reach the ground at the same time if air resistance is negligible.",
+        "Image b": "A boy is on a boat with a fan attached to the boat that is blow on a sail. The boy assumed that the fan and move the sailboat forward. However, this is a misconception as the backward force exerted by the wind on the fan is equal in magnitude to the forward force exerted by the wind on the sail.",
+        "Image c": "A horse with a cart harnessed to it is cannot move as the cart is pulling it back with the same force that the horse is exerted on the cart. This is a misunderstanding of Newton's third law, as the action-reaction forces act on different bodies and hence, do not cancel each other out.",
+        "Image d": "A boy watches a ball being thrown upward and assumes that at the top, the ball is experiences no resultant force as it is stationary. On the contrary, the ball still experiences its weight and hence, is able to continue its acceleration, thus making its way down thereafter.",
+        "Image e": "A boy is speaking to his teacher saying that if a rocket in space runs out of fuel, it will come to a stop. However, there are no dissipative forces in space so by Newton's First law, the rocket will continue its motion even if there is no force acting on it.",
+        "Image f": "A boy claims that a truck which has more mass than a car, is exerting a larger force on the car during collision. However, this violates Newton's third law, which states that the forces are equal in magnitude.",
     }
 
 # Set a default model
@@ -89,8 +89,8 @@ if prompt := st.chat_input("What do you think?"):
 
     # Check if prompt is about an image and retrieve description
     if prompt.startswith("Image"):
-        image_key = prompt.split()[0]  # Assuming prompt like 'Image 1'
-        image_description = st.session_state.image_descriptions.get(image_key - 1, "")
+        image_key = prompt.split()[0]  # Assuming prompt like 'Image a'
+        image_description = st.session_state.image_descriptions.get(image_key, "")
         if image_description:
             # Append image description as a system message
             st.session_state.messages.append({"role": "system", "content": image_description})
