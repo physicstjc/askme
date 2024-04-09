@@ -82,7 +82,6 @@ for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-st.text("Which image would you like to discuss? e.g. type 'Image 1' if you want to discuss the first image.")
 # Accept user input
 if prompt := st.chat_input("What do you think?"):
     # Add user message to chat history
@@ -112,3 +111,7 @@ if prompt := st.chat_input("What do you think?"):
     st.session_state.messages.append({"role": "assistant", "content": response})
     
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
+
+st.text("Which image would you like to discuss?")
+st.text("e.g. type 'Image 1' if you want to discuss the first image.")
+
