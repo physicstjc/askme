@@ -31,8 +31,8 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
 
 
 st.title("Argue with AI")
-st.text("Tell us what you think about the characters' views")
-
+st.text("Which image would you like to discuss?")
+st.text("e.g. type 'Image 1' if you want to discuss the first image.")
 
 # List of images
 images = ["https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballwithmoremass.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-fanonboat.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-horseandcart.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-resultantforceattop.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-stopmoving.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-truckandcar.png"]
@@ -112,6 +112,5 @@ if prompt := st.chat_input("What do you think?"):
     
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
 
-st.text("Which image would you like to discuss?")
-st.text("e.g. type 'Image 1' if you want to discuss the first image.")
+
 
