@@ -40,7 +40,7 @@ captions = ["Image 1", "Image 2", "Image 3","Image 4","Image 5","Image 6"]
 
 # State for current image index
 if 'current_image' not in st.session_state:
-    st.session_state.current_image = 1
+    st.session_state.current_image = 0
 
 # Display the current image
 current_index = st.session_state.current_image
