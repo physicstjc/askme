@@ -102,15 +102,18 @@ if prompt := st.chat_input("What do you think?"):
             {"role": m["role"], "content": m["content"]}
             for m in st.session_state.messages
         ],
-        stream=False,
+        stream=True,
     )
-    response = stream.choices[0].message['content']
+    try:
+        response = stream.choices[0].text
+    except AttributeError:
+        response = "Sorry, I couldn't process that request."
+    
     with st.chat_message("assistant"):
         st.write(response)
     
-    # Update chat history
+    # Update chat history and save messages
     st.session_state.messages.append({"role": "assistant", "content": response})
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
-
-
-
+    
+    
