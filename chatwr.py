@@ -37,11 +37,11 @@ st.text("e.g. type 'Image 1' if you want to discuss the first image.")
 # List of images
 images = ["https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-ballwithmoremass.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-fanonboat.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-horseandcart.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-resultantforceattop.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-stopmoving.png", "https://askphysics.s3.ap-southeast-1.amazonaws.com/argue-truckandcar.png"]
 # Corresponding list of captions
-captions = ["Image 0", "Image 1", "Image 2","Image 3","Image 4","Image 5"]
+captions = ["Image 1", "Image 2", "Image 3","Image 4","Image 5","Image 6"]
 
 # State for current image index
 if 'current_image' not in st.session_state:
-    st.session_state.current_image = 0
+    st.session_state.current_image = 1
 
 # Display the current image
 st.image(images[st.session_state.current_image], width=300)
