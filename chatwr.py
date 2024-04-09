@@ -32,14 +32,14 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
 st.title("Practice with AI")
 st.text("Which question would you like to discuss?")
 
+	
 # Set a default model
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. Give responses that are no longer than 4 lines."}]
-
+    st.session_state.messages = [{"role": "system", "content": "Speak like a friend who is very good in physics. Explain in a succinct and clearly manner, with no more than 300 words per key idea, assuming the students know very little prior knowledge. Display answers with mathematical content using LaTeX markup, within a pair of $ symbols, for clear and precise presentation. Ensure all equations, formulas, and mathematical expressions are correctly formatted in LaTeX. If relevant, make reference to actual webpages in Wikipedia by replacing the {search+terms} placeholder with the search terms in 'https://en.wikipedia.org/w/index.php?search={search+terms}', showing it as a link."},]
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
@@ -47,28 +47,26 @@ for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-# Generate and display response from AI
-try:
-    response = client.chat.completions.create(
-        model=st.session_state["openai_model"],
-        messages=[
-            {"role": m["role"], "content": m["content"]}
-            for m in st.session_state.messages
-        ]
-    )
-
-    if response:
-        ai_response = response.choices[0].text  # Corrected access to the response content
-        with st.chat_message("assistant"):
-            st.write(ai_response)
-        
-        # Update chat history and save messages
-        st.session_state.messages.append({"role": "assistant", "content": ai_response})
-        save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
-
-except Exception as e:
-    st.error(f"An error occurred: {e}")
-
+# Accept user input
+if prompt := st.chat_input("What is up?"):
+    # Add user message to chat history
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
+	    
+    with st.chat_message("assistant"):
+        stream = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
+            stream=True,
+        )
+        response = st.write_stream(stream)
+    
+    st.session_state.messages.append({"role": "assistant", "content": response})
 
   
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
