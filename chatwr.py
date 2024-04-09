@@ -71,7 +71,7 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The user will be prompted for an image which he would like to discuss. Question the user on whether he thinks the protagonist is correct and his assumptions. Give responses that are no longer than 4 lines."}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. The user will be prompted for an image which he would like to discuss. Question the user on whether he thinks the child's understanding is correct and ask for his assumptions. Give responses that are no longer than 4 lines."}]
 
 # For planning assistant: Speak like a high school Physics teacher who who asks socratic questions without giving the actual answers directly. He will guide students to plan an experiment by asking probing questions such as identifying the independent and dependent variables, conditions to be kept constant, the ways to adjust the variables, the instruments to use and the type of graph to plot. Keep to simple laboratory equipment that is available in a normal science laboratory.
 # For socratic tutor: Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning
@@ -95,6 +95,9 @@ if prompt := st.chat_input("What do you think?"):
             # Append image description as a system message
             st.session_state.messages.append({"role": "system", "content": image_description})
 
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": response})
+  
     # Process the conversation with AI
     with st.chat_message("assistant"):
         stream = client.chat.completions.create(
@@ -106,9 +109,7 @@ if prompt := st.chat_input("What do you think?"):
             stream=True,
         )
         response = st.write_stream(stream)
-      
-    # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    
     
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
 
