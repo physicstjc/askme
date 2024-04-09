@@ -31,8 +31,6 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
 
 st.title("Practice with AI")
 st.text("Which question would you like to discuss?")
-st.text("e.g. type 'Question 1' if you want to discuss the first question.")
-
 
 # Set a default model
 if "openai_model" not in st.session_state:
@@ -49,11 +47,7 @@ for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-# Accept user input
-if prompt := st.chat_input("What do you think?"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-  
-    # Generate and display response from AI
+try:
     stream = client.chat.completions.create(
         model=st.session_state["openai_model"],
         messages=[
@@ -63,10 +57,17 @@ if prompt := st.chat_input("What do you think?"):
         stream=True,
     )
 
-    with st.chat_message("assistant"):
-        st.write(response)
-    
-    # Update chat history and save messages
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    for response in stream.iter_lines():
+        if response:
+            with st.chat_message("assistant"):
+                st.write(response)
+            
+            # Update chat history and save messages
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
+
+except Exception as e:
+    st.error(f"An error occurred: {e}")
+  
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
   
