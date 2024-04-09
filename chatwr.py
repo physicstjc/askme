@@ -57,14 +57,14 @@ try:
         stream=True,
     )
 
-    for response in stream.iter_lines():
-        if response:
-            with st.chat_message("assistant"):
-                st.write(response)
+    
+   if response:
+        with st.chat_message("assistant"):
+        st.write(response)
             
-            # Update chat history and save messages
-            st.session_state.messages.append({"role": "assistant", "content": response})
-            save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
+        # Update chat history and save messages
+        st.session_state.messages.append({"role": "assistant", "content": response})
+        save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
