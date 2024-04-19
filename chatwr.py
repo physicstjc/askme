@@ -28,7 +28,7 @@ st.markdown("Two balls are placed at the back of a truck that is moving at const
 
 
 # Display the image
-st.image('https://askphysics.s3.ap-southeast-1.amazonaws.com/trucktopview.png', caption='Top View of Truck with Two Balls of Different Masses', width=400)
+st.image('https://askphysics.s3.ap-southeast-1.amazonaws.com/trucktopview.png', caption='Top View of Truck with Two Balls of Different Masses', width=280)
 
 
 # Set a default model
