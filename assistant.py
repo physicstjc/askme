@@ -8,7 +8,7 @@ import csv
 
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-assistant_id = "asst_iWWEKeASol9qFLldO7LnSW3t"
+assistant_id = "asst_TDA0Bq5SFCx5KhgLYPOJ7Zmc"
 
 st.title("Practice with AI")
 st.text("Which question would you like to discuss?")
