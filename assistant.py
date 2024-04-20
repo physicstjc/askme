@@ -73,8 +73,6 @@ def submit():
 
 st.title("Physics Tutorial Assistant")
 
-st.text_input("Start Typing:", key='query', on_change=submit)
-
 
 st.header('Conversation', divider='rainbow')
 for role, message in st.session_state.conversation_history:
@@ -82,3 +80,7 @@ for role, message in st.session_state.conversation_history:
         st.markdown(f"**You**: {message}")
     else:
         st.markdown(f"**Assistant**: {message}")
+
+
+st.text_input("Start Typing:", key='query', on_change=submit)
+
