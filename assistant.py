@@ -20,10 +20,10 @@ st.text("Which question would you like to discuss?")
 user_input = st.chat_input("What is up?")
 if user_input:
     thread = client.beta.threads.create(
-        message=[
+        message = [
             {
                 "role": "user",
-                "content": [user_input],
+                "content": user_input,
             }
         ]
     )
