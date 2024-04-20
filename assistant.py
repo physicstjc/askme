@@ -73,4 +73,4 @@ st.write("You entered: ", user_input)
 if user_input:
     result = get_assistant_response(user_input)
     st.header('Assistant', divider='rainbow')
-    st.text(result)
+    st.markdown(result)
