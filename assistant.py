@@ -47,7 +47,7 @@ if user_input:
 
 run = client.beta.threads.runs.create_and_poll(
     thread_id=thread.id,
-    assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t"
+    assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t",
     instructions="Please assist the user to solve the physics problem"
 )
 
