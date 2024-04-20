@@ -28,7 +28,7 @@ if user_input:
 
     run = client.beta.threads.runs.retrieve(
         thread_id=thread.id,
-        assistant_id=assistant.id,
+        assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t",
       )
     
     # Check periodically whether the run is done, and update the status
