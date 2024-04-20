@@ -62,7 +62,7 @@ def submit():
     st.session_state.query = ''
 
 
-st.title("Armur AI Assistant")
+st.title("Physics Tutorial Assistant")
 
 st.text_input("Start Typing:", key='query', on_change=submit)
 
