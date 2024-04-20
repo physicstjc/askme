@@ -14,11 +14,9 @@ ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
 st.title("Practice with AI")
 st.text("Which question would you like to discuss?")
 
-thread = client.beta.threads.create(message)
-
 user_input = st.chat_input("What is up?")
 if user_input:
-    message = client.beta.threads.messages.create(
+    thread = client.beta.threads.create(
         role="user",
         content="user_input"
     )
