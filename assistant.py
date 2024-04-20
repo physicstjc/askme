@@ -6,7 +6,10 @@ from datetime import datetime
 import csv
 
 # Initialize OpenAI
-openai.api_key = os.environ['OPENAI_API_KEY']
+
+client = OpenAI(
+  api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
+)
 
 # Initialize AWS S3 client
 s3 = boto3.client(
