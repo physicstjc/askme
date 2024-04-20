@@ -6,9 +6,7 @@ from datetime import datetime
 import csv
 
 # Initialize OpenAI
-client = openai.OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-# Retrieve assistant details if needed (assumes you have a specific method or import for this)
-ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
+openai.api_key = os.environ['OPENAI_API_KEY']
 
 # Initialize AWS S3 client
 s3 = boto3.client(
@@ -49,8 +47,8 @@ if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
     with st.chat_message("assistant"):
-        response_stream = client.chat_completions.create(
-            assistant_id=ASSISTANT_ID,
+        response_stream = openai.ChatCompletion.create(
+            assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t",
             messages=st.session_state["messages"],
             stream=True
         )
