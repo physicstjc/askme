@@ -7,6 +7,8 @@ from datetime import datetime
 import csv
 import re
 
+# Assistant agents do not produce better results than in the playground. https://community.openai.com/t/why-does-my-assistant-find-the-right-answer-from-file-on-playground-but-not-via-api/491778/2
+
 assistant_id    = st.secrets["assistant_id"]
 
 
