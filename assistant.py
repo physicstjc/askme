@@ -9,27 +9,12 @@ import csv
 
 
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-  
-assistant = client.beta.assistants.create(
-  name="Physics Tutor",
-  instructions="You are a personal physics tutor. Write and run code to answer physics questions.",
-  tools=[{"type": "code_interpreter"}],
-  model="gpt-4-turbo",
-)
-
-def save_messages_to_csv_and_upload(messages, bucket_name):
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    filename = f"conversation_history_{timestamp}.csv"
-    with open(filename, mode='w', newline='') as file:
-        writer = csv.writer(file)
-        for message in messages:
-            writer.writerow([message['role'], message['content']])
-    s3.upload_file(Filename=filename, Bucket=bucket_name, Key=filename)
+ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
 
 st.title("Practice with AI")
 st.text("Which question would you like to discuss?")
 
-thread = client.beta.threads.create()
+thread = client.beta.threads.create(message)
 
 user_input = st.chat_input("What is up?")
 if user_input:
@@ -38,16 +23,24 @@ if user_input:
         content="user_input"
     )
 
-run = client.beta.threads.runs.create_and_poll(
+run = client.beta.threads.runs.retrieve(
     thread_id=thread.id,
-    assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t",
-    instructions="Please assist the user to solve the physics problem"
-)
-
-if run.status == 'completed': 
-  messages = client.beta.threads.messages.list(
-    thread_id=thread.id
+    assistant_id=ASSISTANT_ID
   )
-  st.write(messages)
+ 
+# Wait for run to complete
+while run.status != 'completed': 
+  run = client.beta.threads.runs.retrieve(
+    thread_id=thread.id,
+    run_id=run.id
+  )
+  st.write(run,status)
+  time.sleep(1)
 else:
-  st.write(run.status)
+  st.write("Run Complete!")
+
+message_response = client.beta.threads.messages.list(thread_id=thread.id)
+messages = message_response.data
+
+latest_message = message[0]
+st.write(latest_message.content[0].text.value)
