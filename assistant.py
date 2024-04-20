@@ -9,7 +9,10 @@ import csv
 
 
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
+assistant = openai_client.beta.assistants.retrieve(
+    "asst_iWWEKeASol9qFLldO7LnSW3t"
+)
+# ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
 
 st.title("Practice with AI")
 st.text("Which question would you like to discuss?")
@@ -17,13 +20,17 @@ st.text("Which question would you like to discuss?")
 user_input = st.chat_input("What is up?")
 if user_input:
     thread = client.beta.threads.create(
-        role="user",
-        content="user_input"
+        message=[
+            {
+                "role": "user",
+                "content": [user_input],
+            }
+        ]
     )
 
 run = client.beta.threads.runs.retrieve(
     thread_id=thread.id,
-    assistant_id=ASSISTANT_ID
+    assistant_id=assistant.id,
   )
  
 # Wait for run to complete
