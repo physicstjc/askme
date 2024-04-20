@@ -63,8 +63,13 @@ if 'conversation_history' not in st.session_state:
 
 def submit():
     user_input = st.session_state.query
-    get_assistant_response(user_input)
-    st.session_state.query = ''
+    if user_input:  # Check if the user has entered any text
+        # Append user input to conversation history before processing
+        st.session_state.conversation_history.append(("user", user_input))
+        # Get assistant's response
+        get_assistant_response(user_input)
+        # Clear the input field
+        st.session_state.query = ''
 
 st.title("Physics Tutorial Assistant")
 
