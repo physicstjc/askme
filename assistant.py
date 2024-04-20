@@ -49,12 +49,12 @@ if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
     with st.chat_message("assistant"):
-        stream = client.ChatCompletion.create(
+        response_stream = client.chat_completions.create(
             assistant_id=ASSISTANT_ID,
             messages=st.session_state["messages"],
             stream=True
         )
-        response = next(stream)
+        response = next(response_stream)  # Get the first response from the stream
         st.write(response['choices'][0]['message']['content'])
     st.session_state["messages"].append({
         "role": "assistant",
