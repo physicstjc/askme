@@ -77,9 +77,11 @@ st.title("Physics Tutorial Assistant")
 st.header('Conversation', divider='rainbow')
 for role, message in st.session_state.conversation_history:
     if role == 'user':
-        st.markdown(f"**You**: {message}")
+        message = f"<b style='color: yellow;'>{message}</b>"
+        st.markdown(message, unsafe_allow_html=True)
     else:
-        st.markdown(f"**Assistant**: {message}")
+        message = f"<b style='color: white;'>{message}</b>"
+        st.markdown(message, unsafe_allow_html=True)
 
 st.text_input("Start Typing:", key='query', on_change=submit)
 
