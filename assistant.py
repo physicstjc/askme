@@ -70,7 +70,6 @@ st.title("Physics Tutorial Assistant")
 
 st.text_input("Start Typing:", key='query', on_change=submit)
 
-user_input = st.session_state.user_input
 
 st.header('Conversation', divider='rainbow')
 for role, message in st.session_state.conversation_history:
