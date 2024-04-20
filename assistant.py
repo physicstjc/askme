@@ -79,7 +79,7 @@ for role, message in st.session_state.conversation_history:
     if role == 'user':
         st.markdown(f"**You**: {message}")
     else:
-        st.markdown(f"**Assistant**: {message}")
+        st.latex(f"**Assistant**: {message}")
 
 st.text_input("Start Typing:", key='query', on_change=submit)
 
