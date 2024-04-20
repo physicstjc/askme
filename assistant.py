@@ -83,5 +83,5 @@ for role, message in st.session_state.conversation_history:
         message = f"<b style='color: white;'>{message}</b>"
         st.markdown(message, unsafe_allow_html=True)
 
-st.text_input("Start Typing:", key='query', on_change=submit)
+st.text_input("How may I help you?", key='query', on_change=submit)
 
