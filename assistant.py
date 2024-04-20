@@ -76,7 +76,8 @@ st.text_input("Start Typing:", key='query', on_change=submit)
 
 user_input = st.session_state.user_input
 
-st.markdown("You entered: ", user_input)
+st.markdown("You entered: ")
+st.markdown(user_input)
 
 if user_input:
     get_assistant_response(user_input)
