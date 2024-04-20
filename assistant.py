@@ -51,11 +51,19 @@ def get_assistant_response(user_input=""):
         thread_id=assistant_thread.id, order="asc", after=message.id
     )
 
-    return messages.data[0].content[0].text.value
+    
+    # Append the assistant's responses to the session state
+    for msg in messages.data:
+        if msg.role == "assistant":
+            st.session_state.conversation_history.append(msg.content[0].text.value)
+
 
 
 if 'user_input' not in st.session_state:
     st.session_state.user_input = ''
+
+if 'conversation_history' not in st.session_state:
+    st.session_state.conversation_history = []
 
 def submit():
     st.session_state.user_input = st.session_state.query
@@ -68,9 +76,11 @@ st.text_input("Start Typing:", key='query', on_change=submit)
 
 user_input = st.session_state.user_input
 
-st.write("You entered: ", user_input)
+st.markdown("You entered: ", user_input)
 
 if user_input:
-    result = get_assistant_response(user_input)
+    get_assistant_response(user_input)
     st.header('Assistant', divider='rainbow')
-    st.markdown(result)
+    for message in st.session_state.conversation_history:
+        st.markdown(message)
+
