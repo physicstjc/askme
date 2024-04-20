@@ -7,9 +7,8 @@ import csv
 
 # Initialize OpenAI
 
-client = OpenAI(
-  api_key=os.environ['OPENAI_API_KEY'],  # this is also the default, it can be omitted
-)
+
+client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 
 # Initialize AWS S3 client
 s3 = boto3.client(
