@@ -41,26 +41,12 @@ thread = client.beta.threads.create()
 user_input = st.chat_input("What is up?")
 if user_input:
     message = client.beta.threads.messages.create(
-        thread_id=thread.id,
         role="user",
         content="user_input"
     )
 
-    st.session_state["messages"].append({"role": "user", "content": user_input})
-    with st.chat_message("user"):
-        st.markdown(user_input)
-    with st.chat_message("assistant"):
-        response_stream = client.completions.create(
-            assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t",
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True
-        )
-        response = st.write_stream(stream)
-    
-    st.session_state.messages.append({"role": "assistant", "content": response})
-
-  
+run = client.beta.threads.runs.create(
+  thread_id=thread.id,
+  assistant_id=asst_iWWEKeASol9qFLldO7LnSW3t
+)
     save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
