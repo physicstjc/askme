@@ -5,6 +5,7 @@ import boto3
 from datetime import datetime
 import csv
 # Initialize OpenAI
+ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 # Initialize AWS S3 client
 s3 = boto3.client('s3',
