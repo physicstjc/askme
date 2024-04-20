@@ -8,7 +8,7 @@ import csv
 
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-assistant = "asst_iWWEKeASol9qFLldO7LnSW3t"
+assistant.id = "asst_iWWEKeASol9qFLldO7LnSW3t"
 
 # ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
 
@@ -28,7 +28,7 @@ if user_input:
 
     run = client.beta.threads.runs.retrieve(
         thread_id=thread.id,
-        assistant_id=assistant,
+        assistant_id=assistant.id,
       )
     
     # Check periodically whether the run is done, and update the status
