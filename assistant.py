@@ -55,8 +55,8 @@ if run.status == 'completed':
   messages = client.beta.threads.messages.list(
     thread_id=thread.id
   )
-  print(messages)
+  st.write(messages)
 else:
-  print(run.status)
+  st.write(run.status)
 
 save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
