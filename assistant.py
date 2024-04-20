@@ -9,6 +9,13 @@ import csv
 
 
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+  
+assistant = client.beta.assistants.create(
+  name="Physics Tutor",
+  instructions="You are a personal physics tutor. Write and run code to answer physics questions.",
+  tools=[{"type": "code_interpreter"}],
+  model="gpt-4-turbo",
+)
 
 # Initialize AWS S3 client
 s3 = boto3.client(
@@ -29,22 +36,16 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
 st.title("Practice with AI")
 st.text("Which question would you like to discuss?")
 
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
-
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{
-        "role": "system",
-        "content": "Speak like a teacher who asks socratic questions without giving the actual answers directly to the user. Help the user get to the answer by asking guiding questions to scaffold the learning. Give responses that are no longer than 4 lines."
-    }]
-
-for message in st.session_state["messages"]:
-    if message["role"] != "system":
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+thread = client.beta.threads.create()
 
 user_input = st.chat_input("What is up?")
 if user_input:
+    message = client.beta.threads.messages.create(
+        thread_id=thread.id,
+        role="user",
+        content="user_input"
+    )
+
     st.session_state["messages"].append({"role": "user", "content": user_input})
     with st.chat_message("user"):
         st.markdown(user_input)
