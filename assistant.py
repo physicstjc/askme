@@ -49,4 +49,5 @@ run = client.beta.threads.runs.create(
     thread_id=thread.id,
     assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t"
 )
-    save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
+
+save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
