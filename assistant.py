@@ -1,4 +1,5 @@
 import os
+import time
 import streamlit as st
 from openai import OpenAI
 import boto3
@@ -6,12 +7,11 @@ from datetime import datetime
 import csv
 
 # Initialize OpenAI
-
-
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 assistant = openai_client.beta.assistants.retrieve(
     "asst_iWWEKeASol9qFLldO7LnSW3t"
 )
+
 # ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
 
 st.title("Practice with AI")
