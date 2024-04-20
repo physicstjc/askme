@@ -17,13 +17,6 @@ assistant = client.beta.assistants.create(
   model="gpt-4-turbo",
 )
 
-# Initialize AWS S3 client
-s3 = boto3.client(
-    's3',
-    aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-    aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
-)
-
 def save_messages_to_csv_and_upload(messages, bucket_name):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"conversation_history_{timestamp}.csv"
@@ -58,5 +51,3 @@ if run.status == 'completed':
   st.write(messages)
 else:
   st.write(run.status)
-
-save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
