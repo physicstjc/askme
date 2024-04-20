@@ -6,11 +6,6 @@ import boto3
 from datetime import datetime
 import csv
 
-# Initialize OpenAI
-client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-my_assistant    = client.beta.assistants.retrieve(assistant_id)
-thread          = client.beta.threads.create()
-
 # Set openAi client , assistant ai and assistant ai thread
 @st.cache_resource
 def load_openai_client_and_assistant():
