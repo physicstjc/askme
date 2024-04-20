@@ -45,9 +45,18 @@ if user_input:
         content="user_input"
     )
 
-run = client.beta.threads.runs.create(
+run = client.beta.threads.runs.create_and_poll(
     thread_id=thread.id,
     assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t"
+    instructions="Please assist the user to solve the physics problem"
 )
+
+if run.status == 'completed': 
+  messages = client.beta.threads.messages.list(
+    thread_id=thread.id
+  )
+  print(messages)
+else:
+  print(run.status)
 
 save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
