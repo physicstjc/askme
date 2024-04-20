@@ -8,7 +8,7 @@ import csv
 
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-assistant_id = "asst_TDA0Bq5SFCx5KhgLYPOJ7Zmc"
+ASSISTANT_ID = "asst_TDA0Bq5SFCx5KhgLYPOJ7Zmc"
 
 st.title("Practice with AI")
 st.text("Which question would you like to discuss?")
@@ -26,7 +26,7 @@ if user_input:
 
     run = client.beta.threads.runs.retrieve(
         thread_id=thread.id,
-        assistant_id=assistant_id,
+        assistant_id=ASSISTANT_ID,
       )
     
     # Check periodically whether the run is done, and update the status
