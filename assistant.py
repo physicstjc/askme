@@ -5,7 +5,7 @@ import boto3
 from datetime import datetime
 import csv
 # Initialize OpenAI
-ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
+assistant = openai_client.beta.assistants.retrieve("asst_iWWEKeASol9qFLldO7LnSW3t")
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 # Initialize AWS S3 client
 s3 = boto3.client('s3',
@@ -49,7 +49,7 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(prompt)
 	    
     with st.chat_message("assistant"):
-        stream = client.chat.completions.create(
+        thread = openai_client.beta.threads.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": m["role"], "content": m["content"]}
@@ -57,6 +57,26 @@ if prompt := st.chat_input("What is up?"):
             ],
             stream=True,
         )
+
+	# Create a run with the new thread
+        run = openai_client.beta.threads.runs.create(
+            thread_id=thread.id,
+            assistant_id=assistant.id,
+        )
+	while run.status != "completed":
+            time.sleep(5)
+            status_box.update(label=f"{run.status}...", state="running")
+            run = openai_client.beta.threads.runs.retrieve(
+                thread_id=thread.id, run_id=run.id
+            )
+
+        # Once the run is complete, update the status box and show the content
+        status_box.update(label="Complete", state="complete", expanded=True)
+        messages = openai_client.beta.threads.messages.list(
+            thread_id=thread.id
+        )
+        st.markdown(messages.data[0].content[0].text.value)
+
         response = st.write_stream(stream)
     
     st.session_state.messages.append({"role": "assistant", "content": response})
