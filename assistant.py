@@ -17,18 +17,6 @@ def load_openai_client_and_assistant():
 
 client,  my_assistant, assistant_thread = load_openai_client_and_assistant()
 
-
-# Set openAi client , assistant ai and assistant ai thread
-@st.cache_resource
-def load_openai_client_and_assistant():
-    client          = OpenAI(api_key=api_key)
-    my_assistant    = client.beta.assistants.retrieve(assistant_id)
-    thread          = client.beta.threads.create()
-
-    return client , my_assistant, thread
-
-client,  my_assistant, assistant_thread = load_openai_client_and_assistant()
-
 # check in loop  if assistant ai parse our request
 def wait_on_run(run, thread):
     while run.status == "queued" or run.status == "in_progress":
