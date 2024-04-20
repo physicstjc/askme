@@ -74,20 +74,12 @@ def submit():
 
 st.title("Physics Tutorial Assistant")
 
-
 st.header('Conversation', divider='rainbow')
 for role, message in st.session_state.conversation_history:
     if role == 'user':
         st.markdown(f"**You**: {message}")
     else:
-        # Check if the message contains LaTeX (simple detection by looking for typical LaTeX markers like '$')
-        if re.search(r"\$.*\$", message):
-            # Replace simple Markdown indicators that might interfere with LaTeX rendering
-            message = message.replace("**", "")
-            # Render message as LaTeX
-            st.latex(message)
-        else:
-            # Render message as regular text
-            st.markdown(f"**Assistant**: {message}")
+        st.markdown(f"**Assistant**: {message}")
+
 st.text_input("Start Typing:", key='query', on_change=submit)
 
