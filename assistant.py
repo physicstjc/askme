@@ -8,9 +8,7 @@ import csv
 
 # Initialize OpenAI
 client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-assistant = client.beta.assistants.retrieve(
-    "asst_iWWEKeASol9qFLldO7LnSW3t"
-)
+assistant = "asst_iWWEKeASol9qFLldO7LnSW3t"
 
 # ASSISTANT_ID = "asst_iWWEKeASol9qFLldO7LnSW3t"
 
