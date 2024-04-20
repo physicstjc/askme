@@ -49,38 +49,19 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(prompt)
 	    
     with st.chat_message("assistant"):
-        thread = openai_client.beta.threads.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
+        stream = client.chat_completions.create(
+            assistant_id=ASSISTANT_ID,
+            messages=st.session_state["messages"],
+            stream=True
         )
+        response = next(stream)  # Get the first response from the stream
+        st.write(response['choices'][0]['message']['content'])
 
-	# Create a run with the new thread
-        run = openai_client.beta.threads.runs.create(
-            thread_id=thread.id,
-            assistant_id=assistant.id,
-        )
-	while run.status != "completed":
-            time.sleep(5)
-            status_box.update(label=f"{run.status}...", state="running")
-            run = openai_client.beta.threads.runs.retrieve(
-                thread_id=thread.id, run_id=run.id
-            )
+    # Add the assistant's response to chat history
+    st.session_state["messages"].append({
+        "role": "assistant",
+        "content": response['choices'][0]['message']['content']
+    })
 
-        # Once the run is complete, update the status box and show the content
-        status_box.update(label="Complete", state="complete", expanded=True)
-        messages = openai_client.beta.threads.messages.list(
-            thread_id=thread.id
-        )
-        st.markdown(messages.data[0].content[0].text.value)
-
-        response = st.write_stream(stream)
-    
-    st.session_state.messages.append({"role": "assistant", "content": response})
-
-  
-    save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
-  
+    # Save the conversation history and upload to S3
+    save_messages_to_csv_and_upload(st.session_state["messages"], 'your_bucket_name')
