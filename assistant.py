@@ -55,20 +55,16 @@ def get_assistant_response(user_input=""):
     # Append the assistant's responses to the session state
     for msg in messages.data:
         if msg.role == "assistant":
-            st.session_state.conversation_history.append(msg.content[0].text.value)
+            st.session_state.conversation_history.append(("assistant", msg.content[0].text.value))  # Append assistant response
 
-
-
-if 'user_input' not in st.session_state:
-    st.session_state.user_input = ''
 
 if 'conversation_history' not in st.session_state:
     st.session_state.conversation_history = []
 
 def submit():
-    st.session_state.user_input = st.session_state.query
+    user_input = st.session_state.query
+    get_assistant_response(user_input)
     st.session_state.query = ''
-
 
 st.title("Physics Tutorial Assistant")
 
@@ -76,12 +72,9 @@ st.text_input("Start Typing:", key='query', on_change=submit)
 
 user_input = st.session_state.user_input
 
-st.markdown("You entered: ")
-st.markdown(user_input)
-
-if user_input:
-    get_assistant_response(user_input)
-    st.header('Assistant', divider='rainbow')
-    for message in st.session_state.conversation_history:
-        st.markdown(message)
-
+st.header('Conversation', divider='rainbow')
+for role, message in st.session_state.conversation_history:
+    if role == 'user':
+        st.markdown(f"**You**: {message}")
+    else:
+        st.markdown(f"**Assistant**: {message}")
