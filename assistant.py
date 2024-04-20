@@ -5,6 +5,7 @@ from openai import OpenAI
 import boto3
 from datetime import datetime
 import csv
+import re
 
 assistant_id    = st.secrets["assistant_id"]
 
