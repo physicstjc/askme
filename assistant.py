@@ -47,15 +47,17 @@ if user_input:
     with st.chat_message("user"):
         st.markdown(user_input)
     with st.chat_message("assistant"):
-        response_stream = openai.ChatCompletion.create(
+        response_stream = client.completions.create(
             assistant_id="asst_iWWEKeASol9qFLldO7LnSW3t",
-            messages=st.session_state["messages"],
+            messages=[
+                {"role": m["role"], "content": m["content"]}
+                for m in st.session_state.messages
+            ],
             stream=True
         )
-        response = next(response_stream)  # Get the first response from the stream
-        st.write(response['choices'][0]['message']['content'])
-    st.session_state["messages"].append({
-        "role": "assistant",
-        "content": response['choices'][0]['message']['content']
-    })
-    save_messages_to_csv_and_upload(st.session_state["messages"], 'askphysics')
+        response = st.write_stream(stream)
+    
+    st.session_state.messages.append({"role": "assistant", "content": response})
+
+  
+    save_messages_to_csv_and_upload(st.session_state.messages, 'askphysics')
