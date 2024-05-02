@@ -10,7 +10,7 @@ import re
 # Assistant agents do not produce better results than in the playground. https://community.openai.com/t/why-does-my-assistant-find-the-right-answer-from-file-on-playground-but-not-via-api/491778/2
 # It also does not render equations in latex.
 
-assistant_id    = st.secrets["assistant_id"]
+assistant_id    = "asst_zv9GkFuTb5T4abAcUy4hBY1b"
 
 
 # Set openAi client , assistant ai and assistant ai thread
