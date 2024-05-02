@@ -7,7 +7,7 @@ from datetime import datetime
 import csv
 import re
 
-assistant_id2  = st.secrets["assistant_id2"]
+assistant_id  = st.secrets["assistant_id2"]
 
 # Set openAi client , assistant ai and assistant ai thread
 @st.cache_resource
@@ -41,7 +41,7 @@ def get_assistant_response(user_input=""):
 
     run = client.beta.threads.runs.create(
         thread_id=assistant_thread.id,
-        assistant_id=assistant_id2,
+        assistant_id=assistant_id,
     )
 
     run = wait_on_run(run, assistant_thread)
