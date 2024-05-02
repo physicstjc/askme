@@ -10,14 +10,12 @@ import re
 # Assistant agents do not produce better results than in the playground. https://community.openai.com/t/why-does-my-assistant-find-the-right-answer-from-file-on-playground-but-not-via-api/491778/2
 # It also does not render equations in latex.
 
-assistant_id = "asst_zv9GkFuTb5T4abAcUy4hBY1b"
-
 
 # Set openAi client , assistant ai and assistant ai thread
 @st.cache_resource
 def load_openai_client_and_assistant():
     client          = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-    my_assistant    = client.beta.assistants.retrieve(assistant_id=os.environ['assistant_id'])
+    my_assistant    = client.beta.assistants.retrieve(assistant_id='asst_zv9GkFuTb5T4abAcUy4hBY1b'])
     thread          = client.beta.threads.create()
 
     return client , my_assistant, thread
