@@ -37,9 +37,7 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who assesses the response of the student based on clarity, precision, accuracy, logic, relevance and significance. Help the user get to the answer by asking guiding questions to scaffold the learning. The question is: In a scrapyard, electromagnets are used to separate magnetic materials from non-magnetic materials. Explain why a soft iron core is used in the electromagnet. The success criteria for the user A soft iron core is a soft magnetic material which can be easily magnetised and demagnetised. The electromagnet can be strengthened by the magnetic field of the iron when switched on to pick up magnetic materials. When switched off, it loses its magnetic field immediately so as to drop the materials into their designated areas.
-
-"}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who assesses the response of the student based on clarity, precision, accuracy, logic, relevance and significance. Help the user get to the answer by asking guiding questions to scaffold the learning. The question is: In a scrapyard, electromagnets are used to separate magnetic materials from non-magnetic materials. Explain why a soft iron core is used in the electromagnet. The success criteria for the user A soft iron core is a soft magnetic material which can be easily magnetised and demagnetised. The electromagnet can be strengthened by the magnetic field of the iron when switched on to pick up magnetic materials. When switched off, it loses its magnetic field immediately so as to drop the materials into their designated areas."}]
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
