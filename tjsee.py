@@ -2,9 +2,10 @@ import os
 import time
 import streamlit as st
 from openai import OpenAI
+import boto3
 from datetime import datetime
+import csv
 import re
-
 assistant_id  = st.secrets["assistant_id"]
 
 # Set openAi client , assistant ai and assistant ai thread
