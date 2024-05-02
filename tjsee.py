@@ -7,7 +7,7 @@ from datetime import datetime
 import csv
 import re
 
-assistant_id2  = st.secrets["assistant_id2"]
+assistant_id2  = st.secrets["assistant_id"]
 
 # Set openAi client , assistant ai and assistant ai thread
 @st.cache_resource
