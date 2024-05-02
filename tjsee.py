@@ -74,7 +74,7 @@ def submit():
         # Clear the input field
         st.session_state.query = ''
 
-st.title("Temasek JC")
+st.title("Temasek JC Q&A")
 
 st.header('Conversation', divider='rainbow')
 for role, message in st.session_state.conversation_history:
