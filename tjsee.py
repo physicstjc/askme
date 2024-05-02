@@ -7,13 +7,16 @@ from datetime import datetime
 import csv
 import re
 
-assistant_id  = os.environ["assistant_id2"]
+# Assistant agents do not produce better results than in the playground. https://community.openai.com/t/why-does-my-assistant-find-the-right-answer-from-file-on-playground-but-not-via-api/491778/2
+# It also does not render equations in latex.
+assistant_id    = st.secrets["assistant_id"]
+
 
 # Set openAi client , assistant ai and assistant ai thread
 @st.cache_resource
 def load_openai_client_and_assistant():
     client          = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-    my_assistant    = client.beta.assistants.retrieve(assistant_id=os.environ['assistant_id2'])
+    my_assistant    = client.beta.assistants.retrieve(st.secrets['assistant_id'])
     thread          = client.beta.threads.create()
 
     return client , my_assistant, thread
@@ -71,7 +74,7 @@ def submit():
         # Clear the input field
         st.session_state.query = ''
 
-st.title("Temasek Junior College Q&A")
+st.title("Physics Tutorial Assistant")
 
 st.header('Conversation', divider='rainbow')
 for role, message in st.session_state.conversation_history:
@@ -81,4 +84,5 @@ for role, message in st.session_state.conversation_history:
     else:
         st.markdown(message)
 
-st.text_input("Ask me anything about TJC?", key='query', on_change=submit)
+st.text_input("How may I help you?", key='query', on_change=submit)
+
