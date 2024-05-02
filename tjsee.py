@@ -74,7 +74,7 @@ def submit():
         # Clear the input field
         st.session_state.query = ''
 
-st.title("Physics Tutorial Assistant")
+st.title("Temasek JC")
 
 st.header('Conversation', divider='rainbow')
 for role, message in st.session_state.conversation_history:
@@ -84,5 +84,5 @@ for role, message in st.session_state.conversation_history:
     else:
         st.markdown(message)
 
-st.text_input("How may I help you?", key='query', on_change=submit)
+st.text_input("Ask me about TJC!", key='query', on_change=submit)
 
