@@ -41,7 +41,7 @@ def get_assistant_response(user_input=""):
 
     run = client.beta.threads.runs.create(
         thread_id=assistant_thread.id,
-        assistant_id=assistant_id,
+        assistant_id=assistant_id2,
     )
 
     run = wait_on_run(run, assistant_thread)
