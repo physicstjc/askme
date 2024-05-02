@@ -7,13 +7,13 @@ from datetime import datetime
 import csv
 import re
 
-assistant_id  = st.secrets["assistant_id2"]
+assistant_id  = os.environ["assistant_id2"]
 
 # Set openAi client , assistant ai and assistant ai thread
 @st.cache_resource
 def load_openai_client_and_assistant():
     client          = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-    my_assistant    = client.beta.assistants.retrieve(assistant_id=os.environ['assistant_id'])
+    my_assistant    = client.beta.assistants.retrieve(assistant_id=os.environ['assistant_id2'])
     thread          = client.beta.threads.create()
 
     return client , my_assistant, thread
