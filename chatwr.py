@@ -24,11 +24,11 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
     # Upload file to S3
     s3.upload_file(Filename=filename, Bucket=bucket_name, Key=filename)
 st.title("Like it's magnetic, super 이끌림")
-st.markdown("Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Discuss the movement of the two balls when the truck comes to an abrupt stop.")
+st.markdown("In a scrapyard, electromagnets are used to separate magnetic materials from non-magnetic materials. Explain why a soft iron core is used in the electromagnet.")
 
 
 # Display the image
-st.image('https://askphysics.s3.ap-southeast-1.amazonaws.com/trucktopview.png', caption='Top View of Truck with Two Balls of Different Masses', width=280)
+st.image('https://ejss.s3.ap-southeast-1.amazonaws.com/magnetic.jpeg', caption='Electromagnet on a Crane', width=480)
 
 
 # Set a default model
@@ -37,7 +37,9 @@ if "openai_model" not in st.session_state:
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who assesses the response of the student based on clarity, precision, accuracy, logic, relevance and significance. Help the user get to the answer by asking guiding questions to scaffold the learning. The question is: Two balls are placed at the back of a truck that is moving at constant velocity. The blue ball is twice the mass of the red ball. The floor of the truck is perfectly smooth. Compare the movement of the two balls when the truck comes to an abrupt stop.  The success criteria for the user is to be able to explain that both balls will move at the same speed once the truck comes to an abrupt stop, according to Newton's first law, since there will be no net force acting on them since the floor of the truck is smooth and there is no friction. "}]
+    st.session_state.messages = [{"role": "system", "content": "Speak like a teacher who assesses the response of the student based on clarity, precision, accuracy, logic, relevance and significance. Help the user get to the answer by asking guiding questions to scaffold the learning. The question is: In a scrapyard, electromagnets are used to separate magnetic materials from non-magnetic materials. Explain why a soft iron core is used in the electromagnet. The success criteria for the user A soft iron core is a soft magnetic material which can be easily magnetised and demagnetised. The electromagnet can be strengthened by the magnetic field of the iron when switched on to pick up magnetic materials. When switched off, it loses its magnetic field immediately so as to drop the materials into their designated areas.
+
+"}]
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
