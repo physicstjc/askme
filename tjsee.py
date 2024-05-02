@@ -5,7 +5,7 @@ from openai import OpenAI
 from datetime import datetime
 import re
 
-
+assistant_id = 'asst_zv9GkFuTb5T4abAcUy4hBY1b'
 
 # Set openAi client , assistant ai and assistant ai thread
 @st.cache_resource
