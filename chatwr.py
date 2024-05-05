@@ -23,7 +23,7 @@ def save_messages_to_csv_and_upload(messages, bucket_name):
             writer.writerow([message['role'], message['content']])
     # Upload file to S3
     s3.upload_file(Filename=filename, Bucket=bucket_name, Key=filename)
-st.title("Like it's magnetic, super 이끌림")
+st.title("Like it's magnetic")
 st.markdown("In a scrapyard, electromagnets are used to separate magnetic materials from non-magnetic materials. Explain why a soft iron core is used in the electromagnet.")
 
 
