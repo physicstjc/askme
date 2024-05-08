@@ -1,12 +1,17 @@
 import requests
 from datetime import datetime
 import streamlit as st
+import pytz
+
+# Define the Singapore timezone
+singapore_tz = pytz.timezone('Asia/Singapore')
+
 
 # Function to get the carpark availability for a given carpark number
 def get_carpark_availability(carpark_number='T18'):
     url = 'https://api.data.gov.sg/v1/transport/carpark-availability'
     headers = {'accept': '*/*'}
-    date_time = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+    date_time = datetime.now(singapore_tz).strftime('%Y-%m-%dT%H:%M:%S')
     params = {'date_time': date_time}
 
     response = requests.get(url, headers=headers, params=params)
