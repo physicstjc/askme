@@ -42,3 +42,5 @@ if st.button("Get Availability"):
             st.write("---")
     else:
         st.write(carpark_info)
+
+st.write("Check carpark no. using https://services2.hdb.gov.sg/webapp/BN22AWCarParkEnqWeb/BN22CpkInfoSearch.jsp")
