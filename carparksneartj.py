@@ -3,8 +3,8 @@ from datetime import datetime
 import streamlit as st
 import pytz
 import pandas as pd
-from streamlit_folium import st_folium
 import folium
+from streamlit_folium import st_folium
 
 # Define the Singapore timezone
 singapore_tz = pytz.timezone('Asia/Singapore')
