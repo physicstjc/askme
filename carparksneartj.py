@@ -58,26 +58,26 @@ st.header("Carparks near TemaseK JC")
 # List of carparks to monitor
 carparks_to_monitor = ['TM44', 'T79', 'TM12']
 
-if st.button("Get Availability"):
-    carpark_data = get_carpark_availability(carparks_to_monitor)
-    if isinstance(carpark_data, list):
-        # Create a DataFrame for the table
-        rows = []
-        for carpark in carpark_data:
-            for lot in carpark['lots_available']:
-                rows.append({
-                    'Carpark Number': carpark['carpark_number'],
-                    'Block Number': carpark['block_number'],
-                    'Update Time': carpark['update_datetime'],
-                    'Lot Type': lot['lot_type'],
-                    'Total Lots': lot['total_lots'],
-                    'Lots Available': lot['lots_available']
-                })
-        df = pd.DataFrame(rows)
-        df.index = df.index + 1  # Set index to start from 1
-        st.table(df)
-    else:
-        st.write(carpark_data)
+# Get availability data upon loading
+carpark_data = get_carpark_availability(carparks_to_monitor)
+if isinstance(carpark_data, list):
+    # Create a DataFrame for the table
+    rows = []
+    for carpark in carpark_data:
+        for lot in carpark['lots_available']:
+            rows.append({
+                'Carpark Number': carpark['carpark_number'],
+                'Block Number': carpark['block_number'],
+                'Update Time': carpark['update_datetime'],
+                'Lot Type': lot['lot_type'],
+                'Total Lots': lot['total_lots'],
+                'Lots Available': lot['lots_available']
+            })
+    df = pd.DataFrame(rows)
+    df.index = df.index + 1  # Set index to start from 1
+    st.table(df)
+else:
+    st.write(carpark_data)
 
 
 # Embed Google Maps iframe
