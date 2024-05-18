@@ -9,7 +9,7 @@ singapore_tz = pytz.timezone('Asia/Singapore')
 
 # Carpark details
 carpark_details = {
-    'M44': 'Blk 499 Tampines Ave 9',
+    'TM44': 'Blk 499 Tampines Ave 9',
     'T79': 'Blk 460 Tampines St 42',
     'TM12': 'Blk 390A Tampines Ave 7'
 }
@@ -55,7 +55,7 @@ st.title("HDB Carpark Availability Checker")
 st.header("HUNGRY PARK WHERE?")
 
 # List of carparks to monitor
-carparks_to_monitor = ['M44', 'T79', 'TM12']
+carparks_to_monitor = ['TM44', 'T79', 'TM12']
 
 if st.button("Get Availability"):
     carpark_data = get_carpark_availability(carparks_to_monitor)
