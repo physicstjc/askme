@@ -3,11 +3,16 @@ from datetime import datetime
 import streamlit as st
 import pytz
 import pandas as pd
-import folium
-from streamlit_folium import st_folium
 
 # Define the Singapore timezone
 singapore_tz = pytz.timezone('Asia/Singapore')
+
+# Carpark details
+carpark_details = {
+    'M44': 'Blk 499 Tampines Ave 9',
+    'T79': 'Blk 460 Tampines St 42',
+    'TM12': 'Blk 390A Tampines Ave 7'
+}
 
 # Function to get the carpark availability for a given list of carpark numbers
 def get_carpark_availability(carpark_numbers):
@@ -29,6 +34,7 @@ def get_carpark_availability(carpark_numbers):
                     carpark_info = {
                         'carpark_number': carpark['carpark_number'],
                         'update_datetime': carpark['update_datetime'],
+                        'block_number': carpark_details[carpark['carpark_number']],
                         'lots_available': []
                     }
                     for info in carpark['carpark_info']:
@@ -46,10 +52,10 @@ def get_carpark_availability(carpark_numbers):
 
 # Streamlit app
 st.title("HDB Carpark Availability Checker")
-st.header("Carparks near TJC")
+st.header("HUNGRY PARK WHERE?")
 
 # List of carparks to monitor
-carparks_to_monitor = ['T18', 'TM44', 'T79', 'TM12']
+carparks_to_monitor = ['M44', 'T79', 'TM12']
 
 if st.button("Get Availability"):
     carpark_data = get_carpark_availability(carparks_to_monitor)
@@ -60,6 +66,7 @@ if st.button("Get Availability"):
             for lot in carpark['lots_available']:
                 rows.append({
                     'Carpark Number': carpark['carpark_number'],
+                    'Block Number': carpark['block_number'],
                     'Update Time': carpark['update_datetime'],
                     'Lot Type': lot['lot_type'],
                     'Total Lots': lot['total_lots'],
@@ -71,16 +78,3 @@ if st.button("Get Availability"):
         st.write(carpark_data)
 
 st.write("Check carpark no. using https://services2.hdb.gov.sg/webapp/BN22AWCarParkEnqWeb/BN22CpkInfoSearch.jsp")
-
-# Add Google Map with Temasek Junior College as the centre
-# Coordinates for Temasek Junior College
-temasek_jc_coords = [1.3210, 103.9240]
-
-# Create a Folium map
-m = folium.Map(location=temasek_jc_coords, zoom_start=16)
-
-# Add a marker for Temasek Junior College
-folium.Marker(temasek_jc_coords, popup='Temasek Junior College').add_to(m)
-
-# Display the map in Streamlit
-st_folium(m, width=700, height=500)
