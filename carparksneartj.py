@@ -35,7 +35,7 @@ def get_carpark_availability(carpark_numbers):
                     carpark_info = {
                         'carpark_number': carpark['carpark_number'],
                         'update_datetime': carpark['update_datetime'],
-                        'block_number': carpark_details[carpark['carpark_number']],
+                        'block_number': carpark_details.get(carpark['carpark_number'], 'Unknown'),
                         'lots_available': []
                     }
                     for info in carpark['carpark_info']:
@@ -56,7 +56,19 @@ st.title("HDB Carpark Availability Checker")
 st.header("Carparks near TemaseK JC")
 
 # List of carparks to monitor
-carparks_to_monitor = ['TM44', 'T79', 'TM12']
+predefined_carparks = ['TM44', 'T79', 'TM12']
+
+# Input field for additional carpark numbers
+additional_carparks_input = st.text_input("Enter additional carpark numbers (comma-separated)", "")
+
+# Convert user input to a list of carpark numbers
+if additional_carparks_input:
+    additional_carparks = [cp.strip() for cp in additional_carparks_input.split(',')]
+else:
+    additional_carparks = []
+
+# Combine predefined carparks with user-entered carparks
+carparks_to_monitor = predefined_carparks + additional_carparks
 
 # Get availability data upon loading
 carpark_data = get_carpark_availability(carparks_to_monitor)
