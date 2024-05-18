@@ -73,6 +73,7 @@ if st.button("Get Availability"):
                     'Lots Available': lot['lots_available']
                 })
         df = pd.DataFrame(rows)
+        df.index = df.index + 1  # Set index to start from 1
         st.table(df)
     else:
         st.write(carpark_data)
