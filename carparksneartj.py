@@ -52,7 +52,7 @@ def get_carpark_availability(carpark_numbers):
 
 # Streamlit app
 st.title("HDB Carpark Availability Checker")
-st.header("HUNGRY PARK WHERE?")
+st.header("Carparks near TemaseK JC")
 
 # List of carparks to monitor
 carparks_to_monitor = ['TM44', 'T79', 'TM12']
