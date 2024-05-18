@@ -3,6 +3,7 @@ from datetime import datetime
 import streamlit as st
 import pytz
 import pandas as pd
+import streamlit.components.v1 as components
 
 # Define the Singapore timezone
 singapore_tz = pytz.timezone('Asia/Singapore')
@@ -77,5 +78,12 @@ if st.button("Get Availability"):
         st.table(df)
     else:
         st.write(carpark_data)
+
+
+# Embed Google Maps iframe
+map_iframe = """
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.6988590155843!2d103.9536105768848!3d1.3572997615478641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da22b7b378525b%3A0xb349c60aceb7e7e5!2sTemasek%20Junior%20College!5e0!3m2!1sen!2ssg!4v1716004031153!5m2!1sen!2ssg" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+"""
+components.html(map_iframe, height=450)
 
 st.write("Check carpark no. using https://services2.hdb.gov.sg/webapp/BN22AWCarParkEnqWeb/BN22CpkInfoSearch.jsp")
