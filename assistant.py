@@ -74,7 +74,7 @@ def submit():
         st.session_state.query = ''
 
 def replace_brackets_with_dollars(message):
-    return message.replace("[ ", "$$").replace(" ]", "$$").replace(" )", "$").replace(" (", "$")
+    return message.replace("[ ", "$").replace(" ]", "$")
 
 st.title("Physics Tutorial Assistant")
 
