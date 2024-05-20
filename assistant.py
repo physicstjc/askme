@@ -76,8 +76,6 @@ def submit():
 def replace_brackets_with_dollars(text):
     return message.replace("[ ", "$$").replace(" ]", "$$").replace(" )", "$").replace(" (", "$")
 
-formatted_text = replace_brackets_with_dollars(message)
-
 st.title("Physics Tutorial Assistant")
 
 st.header('Conversation', divider='rainbow')
@@ -86,6 +84,7 @@ for role, message in st.session_state.conversation_history:
         message = f"<b style='color: yellow;'>{message}</b>"
         st.markdown(message, unsafe_allow_html=True)
     else:
+        formatted_text = replace_brackets_with_dollars(message)
         st.markdown(formatted_text)
 
 st.text_input("How may I help you?", key='query', on_change=submit)
