@@ -73,6 +73,9 @@ def submit():
         # Clear the input field
         st.session_state.query = ''
 
+def replace_brackets_with_dollars(text):
+    return text.replace("[ ", "$$").replace(" ]", "$$").replace(" )", "$").replace(" (", "$")
+
 st.title("Physics Tutorial Assistant")
 
 st.header('Conversation', divider='rainbow')
