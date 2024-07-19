@@ -92,5 +92,5 @@ for role, message in st.session_state.conversation_history:
     else:
         render_message(message)
 st.markdown("Hello! Let's do a quick review of Newton's laws!")
-st.text_input("How may I help you?", key='query', on_change=submit)
+st.text_input("What would you say?", key='query', on_change=submit)
 
