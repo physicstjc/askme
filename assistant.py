@@ -9,7 +9,7 @@ import re
 
 # It also does not render equations in latex.
 assistant_id    = st.secrets["assistant_id"]
-
+st.markdown("Let's look closer at Newton's laws of motion today!")
 
 # Set openAi client , assistant ai and assistant ai thread
 @st.cache_resource
