@@ -90,5 +90,5 @@ for role, message in st.session_state.conversation_history:
         st.markdown(f"<b style='color: yellow;'>{message}</b>", unsafe_allow_html=True)
     else:
         render_message(message)
-st.text_input("What would you say?", key='query', on_change=submit)
+st.text_input("What do you say?", key='query', on_change=submit)
 
