@@ -33,11 +33,12 @@ st.title("Real-time Wind Speed Data")
 
 station_id = "S107"
 station_name = "East Coast Parkway"
-current_time = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-date_time = st.text_input("Enter the date and time (YYYY-MM-DDTHH:MM:SS)", value=current_time)
+current_time_sgt = (datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+date_time = st.text_input("Enter the date and time (YYYY-MM-DD HH:MM:SS)", value=current_time_sgt)
 
 if st.button("Get Wind Speed"):
-    wind_speed_data = get_wind_speed(station_id, station_name, date_time)
+    date_time_iso = date_time.replace(" ", "T")
+    wind_speed_data = get_wind_speed(station_id, station_name, date_time_iso)
     if wind_speed_data:
         singapore_time = convert_to_singapore_time(wind_speed_data['timestamp'])
         st.write(f"**Wind speed at {wind_speed_data['station_name']} (Station ID: {station_id})**")
