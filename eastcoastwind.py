@@ -18,32 +18,25 @@ def get_wind_speed(station_id, station_name, date_time):
                     wind_speed_mps = wind_speed_knots * 0.514444  # Convert knots to m/s
                     return {
                         "station_name": station_name,
-                        "timestamp": reading.get("timestamp"),
+                        "timestamp": date_time,  # Use the input time as the timestamp
                         "wind_speed": wind_speed_mps,
                         "unit": "m/s"
                     }
     return None
 
-def convert_to_singapore_time(utc_timestamp):
-    utc_time = datetime.fromisoformat(utc_timestamp.replace("Z", "+00:00"))
-    singapore_time = utc_time + timedelta(hours=8)
-    return singapore_time.strftime("%Y-%m-%d %H:%M:%S")
-
 st.title("Real-time Wind Speed Data")
 
 station_id = "S107"
 station_name = "East Coast Parkway"
-current_time_utc = datetime.utcnow()
-current_time_sgt = (current_time_utc + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+current_time_sgt = (datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
 date_time = st.text_input("Enter the date and time (YYYY-MM-DD HH:MM:SS)", value=current_time_sgt)
 
 if st.button("Get Wind Speed"):
     date_time_iso = date_time.replace(" ", "T")
     wind_speed_data = get_wind_speed(station_id, station_name, date_time_iso)
     if wind_speed_data:
-        singapore_time = convert_to_singapore_time(wind_speed_data['timestamp'])
         st.write(f"**Wind speed at {wind_speed_data['station_name']} (Station ID: {station_id})**")
-        st.write(f"**Timestamp (SGT):** {singapore_time}")
+        st.write(f"**Timestamp (SGT):** {date_time}")
         st.write(f"**Wind Speed:** {wind_speed_data['wind_speed']} {wind_speed_data['unit']}")
     else:
         st.write("No data found for the specified station and time.")
