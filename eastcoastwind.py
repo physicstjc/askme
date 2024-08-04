@@ -33,7 +33,8 @@ st.title("Real-time Wind Speed Data")
 
 station_id = "S107"
 station_name = "East Coast Parkway"
-date_time = st.text_input("Enter the date and time (YYYY-MM-DDTHH:MM:SS)", value=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"))
+current_time = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+date_time = st.text_input("Enter the date and time (YYYY-MM-DDTHH:MM:SS)", value=current_time)
 
 if st.button("Get Wind Speed"):
     wind_speed_data = get_wind_speed(station_id, station_name, date_time)
