@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import streamlit.components.v1 as components
 from openai import OpenAI
 # from openai import OpenAI
 client = OpenAI(
@@ -14,7 +15,12 @@ client = OpenAI(
 
 #Change here onwards
 st.markdown("Interact with the app and observe how the height and width affects how far the object must tilt before it topples.")
-
+components.html(
+    """
+    <iframe scrolling="no" title="Stability" src="https://www.geogebra.org/material/iframe/id/hp777myf/width/640/height/480/border/888888/sfsb/true/smb/false/stb/false/stbh/false/ai/false/asb/false/sri/false/rc/false/ld/false/sdz/false/ctl/false" width="640px" height="480px" style="border:0px;"> </iframe>
+    """,
+    height=480  # This is needed to ensure the iframe is shown
+)
 # Set a default model
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4o-mini"
