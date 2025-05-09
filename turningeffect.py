@@ -32,10 +32,12 @@ if "messages" not in st.session_state:
 	    {"role": "system", "content": "Speak like a middle school Physics teacher who uses socratic questioning to get the user to obtain the correct answer. The success criteria is for the user to identify that having a larger base area and a lower centre of gravity will make an object more stable. Use the Claim-Evidence-Reasoning approach, guiding the user to reason that, with a lower centre of gravity or large base area, it will take a larger angle of tilt before the line of action of the force exceeds the pivot about which the object is turning, thereby creating a toppling moment. Congratulate the user once he has achieved the success criteria and end the conversation politely"},
     ]
 
-# Display chat messages from history on app rerun
-#for message in st.session_state.messages:
-#    with st.chat_message(message["role"]):
-#        st.markdown(message["content"])
+# Display chat messages from history on app rerun (excluding system message)
+for message in st.session_state.messages:
+    if message["role"] != "system":
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
 
 # Accept user input
 if prompt := st.chat_input("Your input here"):
