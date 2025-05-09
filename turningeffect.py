@@ -10,14 +10,14 @@ client = OpenAI(
 # openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-st.title("Physics Tutor")
+# st.title("Physics Tutor")
 
 #Change here onwards
 
 
 # Set a default model
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-4o"
+    st.session_state["openai_model"] = "gpt-4o-mini"
 
 # Initialize chat history
 if "messages" not in st.session_state:
