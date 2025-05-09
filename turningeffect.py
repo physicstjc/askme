@@ -21,6 +21,7 @@ components.html(
     """,
     height=480  # This is needed to ensure the iframe is shown
 )
+st.markdown("Let's chat with the AI bot!")
 # Set a default model
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4o-mini"
