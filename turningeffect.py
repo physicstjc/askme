@@ -21,7 +21,7 @@ components.html(
     """,
     height=480  # This is needed to ensure the iframe is shown
 )
-st.markdown("Let's chat with the AI bot!")
+st.markdown("Let's chat with the AI bot! Start by typing your observations in the space below.")
 # Set a default model
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4o-mini"
@@ -38,7 +38,7 @@ if "messages" not in st.session_state:
 #        st.markdown(message["content"])
 
 # Accept user input
-if prompt := st.chat_input("What is up?"):
+if prompt := st.chat_input("Your input here"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     # Display user message in chat message container
