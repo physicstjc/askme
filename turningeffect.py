@@ -13,7 +13,7 @@ client = OpenAI(
 # st.title("Physics Tutor")
 
 #Change here onwards
-
+st.markdown("Interact with the app and observe how the height and width affects how far the object must tilt before it topples.")
 
 # Set a default model
 if "openai_model" not in st.session_state:
